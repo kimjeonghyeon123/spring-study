@@ -6,5 +6,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.earth.heart.domain.BoardDTO" alias="BoardDto" />
+		<typeAlias type="com.earth.heart.domain.SearchItem" alias="SearchItem" />
 	</typeAliases>
 </configuration>

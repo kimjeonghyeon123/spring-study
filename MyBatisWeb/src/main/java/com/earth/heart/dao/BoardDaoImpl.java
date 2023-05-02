@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.earth.heart.domain.BoardDTO;
+import com.earth.heart.domain.SearchItem;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -21,7 +22,12 @@ public class BoardDaoImpl implements BoardDao {
 	public BoardDTO select(Integer bno) throws Exception {
 		return session.selectOne(namespace + "select", bno);
 	}
-
+	
+	@Override
+	public List<BoardDTO> selectPage(Map map) throws Exception {
+		return session.selectList(namespace + "selectPage", map);
+	}
+	
 	@Override
 	public List<BoardDTO> selectAll() throws Exception {
 		return session.selectList(namespace + "selectAll");
@@ -55,6 +61,20 @@ public class BoardDaoImpl implements BoardDao {
 	public int update(BoardDTO boardDTO) throws Exception {
 		return session.update(namespace + "update", boardDTO);
 	}
+	
+	@Override
+	public int increaseViewCnt(Integer bno) throws Exception {
+		return session.update(namespace + "increaseViewCnt", bno);
+	}
 
+	@Override
+	public int searchResultCnt(SearchItem sc) throws Exception {
+		return session.selectOne(namespace + "searchResultCnt", sc);
+	}
+
+	@Override
+	public List<BoardDTO> searchSelectPage(SearchItem sc) throws Exception {
+		return session.selectList(namespace + "searchSelectPage", sc);
+	}
 	
 }

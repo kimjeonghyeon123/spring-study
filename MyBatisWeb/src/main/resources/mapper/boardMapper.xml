@@ -4,18 +4,45 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.earth.heart.dao.BoardMapper">
+	<sql id="selectFromBoard">
+		SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
+		FROM t_board	
+	</sql>
 	
 	<select id="select" parameterType="int" resultType="BoardDto">
-		SELECT bno, title, content, writer, view_cnt, comment_cnt, reg_date
-		FROM t_board
+		<include refid="selectFromBoard" />
 		WHERE bno = #{bno}
 	</select>
 	
 	<select id="selectAll" resultType="BoardDto">
-		SELECT bno, title, "content", writer, view_cnt, comment_cnt, reg_date 
-		FROM t_board
-		ORDER BY reg_date desc, bno desc;
+		<include refid="selectFromBoard" />
+		ORDER BY reg_date desc, bno desc
 	</select>
+	
+	<select id="selectPage" parameterType="map" resultType="BoardDto">
+		<include refid="selectFromBoard" />
+		ORDER BY reg_date desc, bno desc
+		LIMIT #{pageSize} OFFSET #{offset}
+	</select>
+	
+	<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+		SELECT count(*) 
+		FROM t_board
+		WHERE true
+		<include refid="searchCondition" />
+	</select>
+	
+	<select id="searchSelectPage" parameterType="SearchItem" resultType="BoardDto">
+		<include refid="selectFromBoard" />
+		WHERE true
+		<include refid="searchCondition" />
+		ORDER BY reg_date desc, bno desc
+		LIMIT #{pageSize} OFFSET #{offset}
+	</select>
+	
+	<sql id="searchCondition">
+				
+	</sql>
 	
 	<delete id="deleteAll">
 		DELETE FROM t_board
@@ -47,5 +74,10 @@
 		WHERE bno = #{bno} AND writer = #{writer}
 	</update>
 	
+	<update id="increaseViewCnt" parameterType="int">
+		UPDATE t_board 
+		SET view_cnt = view_cnt + 1
+		WHERE bno = #{bno}
+	</update>
 
 </mapper>
