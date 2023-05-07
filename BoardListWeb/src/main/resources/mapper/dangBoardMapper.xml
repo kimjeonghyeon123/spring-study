@@ -6,7 +6,7 @@
 <mapper namespace="com.earth.jeonghyeonkim.dao.DangBoardMapper">
 	
 	<sql id="selectFromBoard">
-		SELECT bno, title, writer, reg_date, view_cnt
+		SELECT bno, title, content, writer, reg_date, view_cnt
 		FROM dang_board
 	</sql>
 	

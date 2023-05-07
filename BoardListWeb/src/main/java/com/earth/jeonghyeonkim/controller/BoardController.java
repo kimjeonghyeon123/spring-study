@@ -58,5 +58,5 @@ public class BoardController {
 		HttpSession session = request.getSession(false);
 		return session != null && session.getAttribute("email") != null && session.getAttribute("email") != "";
 	}
-	
+
 }
