@@ -4,21 +4,23 @@ import java.util.Date;
 import java.util.Objects;
 
 public class DangBoardDTO {
-	private Integer bno;
-	private String title;
-	private String wirter;
-	private String content;
-	private Date reg_date;
-	private int view_cnt;
 	
-	public DangBoardDTO () {
+	private Integer bno;
+	private String  title;
+	private String  content;
+	private String  writer;
+	private int     view_cnt;
+	private int     comment_cnt;
+	private Date    reg_date;
+	
+	public DangBoardDTO() {
 		this("", "", "");
 	}
-
-	public DangBoardDTO(String title, String wirter, String content) {
-		this.title = title;
-		this.wirter = wirter;
+	
+	public DangBoardDTO(String  title, String  content, String  writer) {
+		this.title   = title;
 		this.content = content;
+		this.writer  = writer;
 	}
 
 	public Integer getBno() {
@@ -37,14 +39,6 @@ public class DangBoardDTO {
 		this.title = title;
 	}
 
-	public String getWirter() {
-		return wirter;
-	}
-
-	public void setWirter(String wirter) {
-		this.wirter = wirter;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -53,12 +47,12 @@ public class DangBoardDTO {
 		this.content = content;
 	}
 
-	public Date getReg_date() {
-		return reg_date;
+	public String getWriter() {
+		return writer;
 	}
 
-	public void setReg_date(Date reg_date) {
-		this.reg_date = reg_date;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public int getView_cnt() {
@@ -69,9 +63,25 @@ public class DangBoardDTO {
 		this.view_cnt = view_cnt;
 	}
 
+	public int getComment_cnt() {
+		return comment_cnt;
+	}
+
+	public void setComment_cnt(int comment_cnt) {
+		this.comment_cnt = comment_cnt;
+	}
+
+	public Date getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(bno, title, wirter);
+		return Objects.hash(bno, comment_cnt, content, reg_date, title, view_cnt, writer);
 	}
 
 	@Override
@@ -83,8 +93,12 @@ public class DangBoardDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		DangBoardDTO other = (DangBoardDTO) obj;
-		return Objects.equals(bno, other.bno) && Objects.equals(title, other.title)
-				&& Objects.equals(wirter, other.wirter);
-	}	
+		return Objects.equals(bno, other.bno) && comment_cnt == other.comment_cnt
+				&& Objects.equals(content, other.content) && Objects.equals(reg_date, other.reg_date)
+				&& Objects.equals(title, other.title) && view_cnt == other.view_cnt
+				&& Objects.equals(writer, other.writer);
+	}
+	
+	
 	
 }

@@ -26,14 +26,14 @@
         <nav class="navbar">
 
             <div class="navbar__logo">
-                <a href="">with DANG</a>
+                <a href="<c:url value='/' />">with DANG</a>
             </div>
 
             <ul class="navbar__menu">
                 <li><a href="main.html">댕댕여지도</a></li>
                 <li><a href="dangguen.html">댕근마켓</a></li>
                 <li><a href="dangcare.html">댕댕케어</a></li>
-                <li><a href="dangcomu.html">댕댕커뮤</a></li>
+                <li><a href="<c:url value='/board/list' />">댕댕커뮤</a></li>
                 <li><a href="dangoffice.html">댕사무소</a></li>
                 <li><button class="btnLogin"><a href="<c:url value='${loginoutlink}' />">${loginout}</a></button></li>
                 <li><a href="mypage.html"><i class="fa fa-user-o" id="btnMypage" aria-hidden="true"></i></a></li>
@@ -66,22 +66,27 @@
 	                    </div>
 	                    <div class="writer">${dangBoardDTO.writer}</div>
 	                    <div class="date">
-							<fmt:formatDate value="${dangBoardDTO.reg_date}" pattern="yyyy-mm-dd" type="date" />
+							<fmt:formatDate value="${dangBoardDTO.reg_date}" pattern="yyyy-MM-dd" type="date" />
 						</div>
 	                    <div class="count">${dangBoardDTO.view_cnt}</div>
 	                </div>
                 </c:forEach>
             </div>
             <div class="board_page">
-                <a href="#" class="bt first"><<</a>
-                <a href="#" class="bt prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt next">></a>
-                <a href="#" class="bt last">>></a>
+            	<c:if test="${totalCnt == null || totalCnt == 0}">
+            		<div>게시물이 없습니다.</div>
+            	</c:if>
+            	<c:if test="${totalCnt != null || totalCnt != 0}">
+            		<c:if test="${pr.showPrev}">
+    					<a class="page" href="<c:url value="/board/list${pr.sc.getQueryString(pr.beginPage-1)}" />">&lt;</a>
+    				</c:if>
+    				<c:forEach var="i" begin="${pr.beginPage}" end="${pr.endPage}">
+    						<a class="page" href="<c:url value="/board/list${pr.sc.getQueryString(i)}" />">${i}</a>
+    				</c:forEach>
+    				<c:if test="${pr.showNext}">
+    					<a class="page" href="<c:url value="/board/list${pr.sc.getQueryString(pr.endPage+1)}" />">&gt;</a>
+    				</c:if> 
+            	</c:if>
             </div>
             <div class="bt_wrap">
                 <a href="write.html" class="on">등록</a>

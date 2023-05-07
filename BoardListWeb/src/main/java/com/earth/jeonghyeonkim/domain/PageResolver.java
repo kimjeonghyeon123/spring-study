@@ -1,7 +1,7 @@
 package com.earth.jeonghyeonkim.domain;
 
 public class PageResolver {
-	
+
 	private SearchItem sc;
 	
 	private int totalCnt;
@@ -122,20 +122,4 @@ public class PageResolver {
 	public int getNAV_SIZE() {
 		return NAV_SIZE;
 	}
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

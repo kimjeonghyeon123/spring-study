@@ -24,41 +24,36 @@ public class BoardController {
 	DangBoardService dangBoardService;
 	
 	@GetMapping("/list")
-	public String list(SearchItem sc, Model m, HttpServletRequest request) {
-		//로그인 했는지 체크
+	public String boardList(SearchItem sc, Model m, HttpServletRequest request) throws Exception {
 		if(!loginCheck(request)) {
 			return "redirect:/login/login?toURL=" + request.getRequestURL();
 		}
 		
-		try {
-			int totalCnt = dangBoardService.getSearchResultCnt(sc);
-			m.addAttribute("totalCnt", totalCnt);
-			
-			PageResolver pageResolver = new PageResolver(totalCnt, sc);
-			
-			List<DangBoardDTO> list = dangBoardService.getSearchSelectPage(sc);
-			m.addAttribute("list", list);
-			m.addAttribute("pr", pageResolver);
-			
-			
-		} catch (Exception e) {e.printStackTrace();}
+		int totalCnt = dangBoardService.getSearchResultCnt(sc);
+		m.addAttribute("totalCnt", totalCnt);
+		
+		PageResolver pr = new PageResolver(totalCnt, sc);
+		
+		List<DangBoardDTO> list = dangBoardService.getSearchSelectPage(sc);
+		m.addAttribute("list", list);
+		m.addAttribute("pr", pr);
 		
 		return "boardList";
 	}
-
+	
 	@GetMapping("/read")
 	public String read(Integer bno, SearchItem sc, Model m) {
-		DangBoardDTO dangBoardDTO;
 		try {
-			dangBoardDTO = dangBoardService.read(bno);
+			DangBoardDTO dangBoardDTO = dangBoardService.read(bno);
 			m.addAttribute("dangBoardDTO", dangBoardDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/board/list";
 		}
+		
 		return "board";
 	}
-	
+
 	private boolean loginCheck(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		return session != null && session.getAttribute("email") != null && session.getAttribute("email") != "";
