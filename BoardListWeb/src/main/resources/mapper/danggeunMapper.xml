@@ -6,11 +6,11 @@
 <mapper namespace="com.earth.jeonghyeonkim.dao.DanggeunMapper">
 
 	<sql id="selectFromDanggeun">
-		SELECT id, title, name, type_id, price, content, writer, view_cnt, add_cnt, reg_date, up_date
+		SELECT id, title, name, type_id, local_id, price, content, writer, view_cnt, add_cnt, reg_date, up_date
 		FROM danggeun
 	</sql>
 
-	<select id="id" parameterType="int" resultType="DanggeunDto">
+	<select id="select" parameterType="int" resultType="DanggeunDto">
 		<include refid="selectFromDanggeun"/>
 		WHERE id = #{id}
 	</select>
@@ -20,43 +20,16 @@
 		ORDER BY reg_date, id desc
 	</select>
 	
-	<delete id="deleteAll">
-		DELETE FROM danggeun
-	</delete>
-	
-	<delete id="delete" parameterType="map">
-		DELETE FROM danggeun
-		WHERE id = #{id} AND writer = #{writer}
-	</delete>
-	
-	<delete id="deleteForAdmin" parameterType="int">
-		DELETE FROM danggeun
-		WHERE id = #{id}
-	</delete>
+	<select id="selectBySearch" parameterType="map" resultType="DanggeunDto">
+		<include refid="selectFromDanggeun"/>
+		WHERE type_id = #{type_id} AND local_id = #{local_id}
+	</select>
 	
 	<insert id="insert" parameterType="DanggeunDto">
-		INSERT INTO danggeun(title, name, type_id, price, content, writer)
-		VALUES(#{title}, #{name}, #{type_id}, #{price}, #{content}, #{writer})
+		INSERT INTO danggeun(title, name, type_id, local_id, price, content, writer)
+		VALUES(#{title}, #{name}, #{type_id}, #{local_id}, #{price}, #{content}, #{writer})
 	</insert>
-	
-	<update id="update" parameterType="DanggeunDto">
-		UPDATE danggeun
-		SET	title = #{title}, name = #{name}, type_id = #{type_id}, price = #{price}, content = #{content}, up_date = now()
-		WHERE id = #{id} AND writer = #{writer}
-	</update>
-	
-	<update id="increaseViewCnt" parameterType="int">
-		UPDATE danggeun
-		SET view_cnt = view_cnt + 1
-		WHERE id = #{id}
-	</update>
-	
-	<update id="increaseAddCnt" parameterType="int">
-		UPDATE danggeun
-		SET add_cnt = add_cnt + 1
-		WHERE id = #{id}
-	</update>
-	
+
 </mapper>
 
 

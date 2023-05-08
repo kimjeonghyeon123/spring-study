@@ -21,6 +21,7 @@ insert into dang_board(title, writer, content)
 values('title', 'writer', 'abcdefg');
 
 truncate dang_board restart identity;
+truncate danggeun restart identity;
 
 drop table if exists dang_member;
 create table dang_member(
@@ -42,6 +43,7 @@ create table danggeun(
 	title		varchar(50) not null,	-- 상품게시물제목
 	name 		varchar(50) not null,	-- 상품이름
 	type_id		Integer		not null,	-- 상품타입
+	local_id	Integer		not null,	-- 판매지역
 	price		int			not null,	-- 상품가격
 	content 	text 		not null,	-- 상품설명
 	writer 		varchar(50) not null,	-- 판매자
@@ -49,9 +51,11 @@ create table danggeun(
 	add_cnt		int			default 0,	-- 찜 수
 	reg_date 	date 		default current_timestamp,
 	up_date 	date 		default current_timestamp,
-	foreign key (type_id) references danggeun_type(id),
-	foreign key (writer) references dang_member(email)
+	foreign key (type_id) references danggeun_type(id)
 );
+
+insert into danggeun(title, name, type_id, local_id, price, content, writer)
+values('1', '1', 1, 1, 3000, '1', '1');
 
 drop table if exists danggeun_type;
 create table danggeun_type(
@@ -74,7 +78,9 @@ select *
 from danggeun_type;
 
 
-
+SELECT name
+FROM danggeun_type
+WHERE id = 1;
 
 
 

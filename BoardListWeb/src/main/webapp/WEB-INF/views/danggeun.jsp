@@ -11,7 +11,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<c:url value='/resources/css/dangguen.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/danggeun.css' />">
     <script src="<c:url value='/resources/js/scroll.js' />"></script>
     <script src="<c:url value='/resources/js/toggle.js' />" defer></script>
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
@@ -237,215 +237,33 @@
     <article class="dangguen-list">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 양말</a></h5>
-                                <!-- Product price-->
-                                4,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">발 크림</a></h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                </div>
-                                <!-- Product price-->
-                                15,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 우비</a></h5>
-                                <!-- Product price-->
-                                10,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">배변패드</a></h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                </div>
-                                <!-- Product price-->
-                                8,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 리드줄</a></h5>
-                                <!-- Product price-->
-                                4,500원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 옷</a></h5>
-                                <!-- Product price-->
-                                3,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Sale badge-->
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 방석</a></h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                </div>
-                                <!-- Product price-->
-                                18,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder"><a href="dangguenView.html">강아지 옷걸이</a></h5>
-                                <!-- Product reviews-->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                </div>
-                                <!-- Product price-->
-                                5,000원
-                                <li id="user-adress"><a>서울시 강남구</a></li>
-                                <li id="user-name"><a>글쓴이</a></li>
-
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
-                                <a class="btnscrap" href="">찜♥</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            	<c:forEach var="danggeundto" items="${list}">
+	                <div class="col mb-5">
+	                    <div class="card h-100">
+	                        <!-- Product image-->
+	                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+	                        <!-- Product details-->
+	                        <div class="card-body p-4">
+	                            <div class="text-center">
+	                                <!-- Product name-->
+	                                <h5 class="fw-bolder"><a href="<c:url value='/danggeun/view?id=${danggeundto.id}' />">${danggeundto.title}</a></h5>
+	                                <!-- Product price-->
+	                                ${danggeundto.price}원
+	                                <li id="user-adress"><a>${danggeundto.local_id}</a></li>
+	                                <li id="user-name"><a>${danggeundto.writer}</a></li>
+	
+	
+	                            </div>
+	                        </div>
+	                        <!-- Product actions-->
+	                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+	                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
+	                                <a class="btnscrap" href="">찜♥</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+             	</c:forEach>
             </div>
         </div>
     </article>

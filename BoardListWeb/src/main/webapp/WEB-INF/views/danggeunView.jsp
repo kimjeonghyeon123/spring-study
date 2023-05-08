@@ -12,9 +12,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<c:url value='resources/css/dangguen.css' />">
+	<link rel="stylesheet" href="<c:url value='/resources/css/danggeun.css' />">
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
-    <script src="<c:url value='/resources/js/dangguen.js' />"></script>
+    <script src="<c:url value='/resources/js/danggeun.js' />"></script>
     <script src="<c:url value='/resources/js/toggle.js' />" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
         integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
@@ -60,23 +60,23 @@
         <div class="board_view_wrap">
             <div class="board_view">
                 <div class="title">
-                    강아지 양말 직거래 합니다~
+                    ${danggeunDTO.title}
                 </div>
                 <div class="info">
                     <dl>
                         <dt>글쓴이</dt>
-                        <dd>쫑이</dd>
+                        <dd>${danggeunDTO.writer}</dd>
                     </dl>
                     <dl>
                         <dt>작성일</dt>
-                        <dd>2023.04.14</dd>
+                        <dd>${danggeunDTO.reg_date}</dd>
                     </dl>
                     <dl>
                         <dt>조회</dt>
-                        <dd>1</dd>
+                        <dd>${danggeunDTO.view_cnt}</dd>
                     </dl>
                     <dl>
-                        <dd>서울시 강남구</dd>
+                        <dd>${danggeunDTO.local_id}</dd>
                     </dl>
                 </div>
                 <div class="slideshow-container">
@@ -109,16 +109,13 @@
                     <span class="dot" onclick="currentSlide(3)"></span>
                 </div>
                 <div class="cont">
-                    미개봉 새제품 입니다!<br>
-                    6시 이후 강남역 직거래 원합니다.<br>
-                    메세지주세요!<br><br>
-
+                    ${danggeunDTO.content}
                 </div>
             </div>
 
             <div class="bt_wrap">
                 <a href="chat.html" class="on">채팅</a>
-                <a href="dangguen.html">목록</a>
+                <a href="<c:url value='/danggeun/list' />">목록</a>
             </div>
 
         </div>

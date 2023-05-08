@@ -3,22 +3,13 @@ package com.earth.jeonghyeonkim.domain;
 import java.util.Date;
 import java.util.Objects;
 
-//id 			serial 		primary key,-- 상품아이디
-//title		varchar(50) not null,
-//name 		varchar(50) not null,	-- 상품이름
-//price		int			not null,	-- 상품가격
-//content 	text 		not null,	-- 상품설명
-//writer 		varchar(50) not null,	-- 판매자
-//view_cnt 	int 		default 0,	-- 조회수
-//add_cnt		int			default 0,	-- 찜 수
-//reg_date 	date 		default current_timestamp,
-//up_date 	date 		default current_timestamp
 
 public class DanggeunDTO {
 	private Integer id;
 	private String title;
 	private String name;
 	private Integer type_id;
+	private Integer local_id;
 	private int price;
 	private String content;
 	private String writer;
@@ -28,12 +19,15 @@ public class DanggeunDTO {
 	private Date up_date;
 	
 	public DanggeunDTO() {
-		this("", "", 0, "", "");
+		this("", "", 0, 0, 0, "", "");
 	}
-
-	public DanggeunDTO(String title, String name, int price, String content, String writer) {
+	
+	public DanggeunDTO(String title, String name, Integer type_id, Integer local_id, int price, String content,
+			String writer) {
 		this.title = title;
 		this.name = name;
+		this.type_id = type_id;
+		this.local_id = local_id;
 		this.price = price;
 		this.content = content;
 		this.writer = writer;
@@ -61,6 +55,22 @@ public class DanggeunDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getType_id() {
+		return type_id;
+	}
+
+	public void setType_id(Integer type_id) {
+		this.type_id = type_id;
+	}
+
+	public Integer getLocal_id() {
+		return local_id;
+	}
+
+	public void setLocal_id(Integer local_id) {
+		this.local_id = local_id;
 	}
 
 	public int getPrice() {
@@ -121,7 +131,8 @@ public class DanggeunDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(add_cnt, content, id, name, price, reg_date, title, up_date, view_cnt, writer);
+		return Objects.hash(add_cnt, content, id, local_id, name, price, reg_date, title, type_id, up_date, view_cnt,
+				writer);
 	}
 
 	@Override
@@ -134,8 +145,9 @@ public class DanggeunDTO {
 			return false;
 		DanggeunDTO other = (DanggeunDTO) obj;
 		return add_cnt == other.add_cnt && Objects.equals(content, other.content) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && price == other.price && Objects.equals(reg_date, other.reg_date)
-				&& Objects.equals(title, other.title) && Objects.equals(up_date, other.up_date)
+				&& Objects.equals(local_id, other.local_id) && Objects.equals(name, other.name) && price == other.price
+				&& Objects.equals(reg_date, other.reg_date) && Objects.equals(title, other.title)
+				&& Objects.equals(type_id, other.type_id) && Objects.equals(up_date, other.up_date)
 				&& view_cnt == other.view_cnt && Objects.equals(writer, other.writer);
 	}
 
