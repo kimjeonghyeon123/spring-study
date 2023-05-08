@@ -71,10 +71,10 @@ public class SearchItem {
 	// ?page=10&pageSize=10&option=A&keyword=title
 	public String getQueryString(Integer page) {
 		return UriComponentsBuilder.newInstance()
-			   .queryParam("page", page).queryParam("pageSize", pageSize)
+			   .queryParam("page", page)
+			   .queryParam("pageSize", pageSize)
 			   .queryParam("option", option)
 			   .queryParam("keyword", keyword).build().toString();
-		
 	}
 	
 }

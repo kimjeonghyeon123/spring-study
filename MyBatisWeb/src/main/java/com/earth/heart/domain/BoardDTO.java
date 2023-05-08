@@ -7,7 +7,8 @@ import java.util.Objects;
  	 bno         serial       primary key
 	,title       varchar(100) not null
 	,content     text         not null
-	,writer      varchar(30)  not null
+	,writer      varchar(30)  not 
+	null
 	,view_cnt    int          default 0
 	,comment_cnt int          default 0
 	,reg_date    date         default current_timestamp

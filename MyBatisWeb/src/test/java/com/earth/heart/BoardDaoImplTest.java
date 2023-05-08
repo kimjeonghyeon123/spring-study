@@ -136,6 +136,18 @@ public class BoardDaoImplTest {
 		BoardDTO boardDTO2 = boardDao.select(bno);
 		assertTrue(boardDTO.equals(boardDTO2));
 	}
+	
+	@Test
+	public void insertDummyTestData() throws Exception {
+		boardDao.deleteAll();
+		assertTrue(boardDao.count() == 0);
+		
+		for(int i = 1; i <= 250; i++) {
+			BoardDTO boardDTO = new BoardDTO("Pioneering" + i, "Ready for Action", "earth");
+			boardDao.insert(boardDTO);
+		}
+		assertTrue(boardDao.count() == 250);
+	}
 }
 
 
