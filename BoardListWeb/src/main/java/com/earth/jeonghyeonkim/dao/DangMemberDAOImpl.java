@@ -11,7 +11,7 @@ public class DangMemberDAOImpl implements DangMemberDAO {
 
 	@Autowired
 	private SqlSession session;
-	private static String namespace = "com.earth.jeonghyeonkim.dao.DangMemberMapper.";  
+	private static String namespace = "com.earth.jeonghyeonkim.dao.DangMemberMapper.";
 	
 	@Override
 	public DangMemberDTO select(String email) throws Exception {
@@ -22,5 +22,5 @@ public class DangMemberDAOImpl implements DangMemberDAO {
 	public int insert(DangMemberDTO dangMemberDTO) throws Exception {
 		return session.insert(namespace + "insert", dangMemberDTO);
 	}
-	
+
 }

@@ -13,7 +13,7 @@ public class DangMemberServiceImpl implements DangMemberService {
 	DangMemberDAO dangMemberDAO;
 	
 	@Override
-	public DangMemberDTO getDangMember(String email) throws Exception {
+	public DangMemberDTO readDangMember(String email) throws Exception {
 		return dangMemberDAO.select(email);
 	}
 
@@ -21,5 +21,5 @@ public class DangMemberServiceImpl implements DangMemberService {
 	public int registerDangMember(DangMemberDTO dangMemberDTO) throws Exception {
 		return dangMemberDAO.insert(dangMemberDTO);
 	}
-	
+
 }

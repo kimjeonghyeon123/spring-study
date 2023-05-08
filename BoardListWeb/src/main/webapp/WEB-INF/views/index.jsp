@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6eb28aa20d7222d5529f51952b8be3c3"></script>
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
-	<script src="<c:url value='/resources/js/main.css'/>" defer>></script>
+	<script src="<c:url value='/resources/js/main.js'/>" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
@@ -26,12 +26,12 @@
         <nav class="navbar">
 
             <div class="navbar__logo">
-                <a href="">with DANG</a>
+                <a href="<c:url value='/' />">with DANG</a>
             </div>
 
             <ul class="navbar__menu">
                 <li><a href="main.html">댕댕여지도</a></li>
-                <li><a href="dangguen.html">댕근마켓</a></li>
+                <li><a href="<c:url value='/danggeun/list' />">댕근마켓</a></li>
                 <li><a href="dangcare.html">댕댕케어</a></li>
                 <li><a href="<c:url value='/board/list' />">댕댕커뮤</a></li>
                 <li><a href="dangoffice.html">댕사무소</a></li>

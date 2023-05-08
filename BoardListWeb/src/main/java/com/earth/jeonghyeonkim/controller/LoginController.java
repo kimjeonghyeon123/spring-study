@@ -1,6 +1,5 @@
 package com.earth.jeonghyeonkim.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.http.Cookie;
@@ -26,19 +25,16 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String loginForm() {
-		return "loginForm";
+		return "login";
 	}
 	
 	@PostMapping("/login")
-	public String login(String email, String pwd, String toURL, boolean rememberId, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		
-		// 아이디, 비밀번호 체크
+	public String login(String email, String pwd, String toURL, boolean rememberId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if(!loginCheck(email, pwd)) {
 			String msg = URLEncoder.encode("아이디, 비밀번호를 잘못 입력했습니다.", "utf-8");
 			return "redirect:/login/login?msg=" + msg;
 		}
 		
-		// 아이디 기억 쿠기 설정
 		if(rememberId) {
 			Cookie cookie = new Cookie("email", email);
 			response.addCookie(cookie);
@@ -49,23 +45,19 @@ public class LoginController {
 			response.addCookie(cookie);
 		}
 		
-		//세션 설정
 		HttpSession session = request.getSession();
 		session.setAttribute("email", email);
 		
-		// 로그인 후 복귀 URL 설정
-		toURL = toURL.equals("") || toURL == null ? "/" : toURL;
-		return "redirect:" + toURL;		
+		toURL = toURL == null || toURL.equals("") ? "/" : toURL;
+		return "redirect:" + toURL;
 	}
 
-	private boolean loginCheck(String email, String pwd) {
-		try {
-			DangMemberDTO dangMemberDTO = dangMemberService.getDangMember(email);
-			return dangMemberDTO.getPwd().equals(pwd);
-		} catch (Exception e) {
-			e.printStackTrace();
+	private boolean loginCheck(String email, String pwd) throws Exception {
+		DangMemberDTO dangMemberDTO = dangMemberService.readDangMember(email);
+		if(dangMemberDTO == null) {
 			return false;
 		}
+		return dangMemberDTO.getPwd().equals(pwd);
 	}
 	
 	@GetMapping("/logout")
@@ -73,5 +65,4 @@ public class LoginController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
 }

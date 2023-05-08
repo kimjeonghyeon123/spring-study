@@ -12,14 +12,9 @@ import com.earth.jeonghyeonkim.domain.SearchItem;
 
 @Service
 public class DangBoardServiceImpl implements DangBoardService {
-	
-	@Autowired
-	DangBoardDAO dangBoardDAO;
 
-	@Override
-	public List<DangBoardDTO> getPage(Map map) throws Exception {
-		return dangBoardDAO.selectPage(map);
-	}
+	@Autowired
+	private DangBoardDAO dangBoardDAO;
 
 	@Override
 	public int getCount() throws Exception {
@@ -34,6 +29,11 @@ public class DangBoardServiceImpl implements DangBoardService {
 	}
 
 	@Override
+	public List<DangBoardDTO> getPage(Map map) throws Exception {
+		return dangBoardDAO.selectPage(map);
+	}
+
+	@Override
 	public int getSearchResultCnt(SearchItem sc) throws Exception {
 		return dangBoardDAO.searchResultCnt(sc);
 	}
@@ -44,9 +44,18 @@ public class DangBoardServiceImpl implements DangBoardService {
 	}
 
 	@Override
+	public int remove(Integer bno, String writer) throws Exception {
+		return dangBoardDAO.delete(bno, writer);
+	}
+
+	@Override
 	public int write(DangBoardDTO dangBoardDTO) throws Exception {
 		return dangBoardDAO.insert(dangBoardDTO);
 	}
-	
-	
+
+	@Override
+	public int modify(DangBoardDTO dangBoardDTO) throws Exception {
+		return dangBoardDAO.update(dangBoardDTO);
+	}
+
 }
