@@ -17,19 +17,42 @@
 	
 	<select id="selectAll" resultType="DanggeunDto">
 		<include refid="selectFromDanggeun"/>
-		ORDER BY reg_date, id desc
+		ORDER BY reg_date desc, id desc
 	</select>
 	
-	<select id="selectBySearch" parameterType="map" resultType="DanggeunDto">
+	<select id="selectByType" parameterType="int" resultType="DanggeunDto">
 		<include refid="selectFromDanggeun"/>
-		WHERE type_id = #{type_id} AND local_id = #{local_id}
+		WHERE type_id = #{type_id}
+		ORDER BY reg_date desc, id desc
 	</select>
 	
 	<insert id="insert" parameterType="DanggeunDto">
 		INSERT INTO danggeun(title, name, type_id, local_id, price, content, writer)
 		VALUES(#{title}, #{name}, #{type_id}, #{local_id}, #{price}, #{content}, #{writer})
 	</insert>
+	
+	<delete id="delete" parameterType="map">
+		DELETE FROM danggeun
+		WHERE id=#{id} AND writer = #{writer}
+	</delete>
 
+	<update id="addViewCnt" parameterType="int">
+		UPDATE danggeun
+		SET view_cnt = view_cnt + 1
+		WHERE id = #{id}
+	</update>
+
+	<select id="addAddCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM store_danggeun
+		WHERE id=#{id}
+	</select>
+	
+	<insert id="insertStore" parameterType="map">
+		INSERT INTO store_danggeun
+		VALUES(#{id}, #{writer})
+	</insert>
+	
 </mapper>
 
 

@@ -11,7 +11,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="<c:url value='resources/css/danggeun.css' />">
+    <link rel="stylesheet" href="<c:url value='/resources/css/danggeun.css' />">
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
     <script src="<c:url value='resources/js/toggle.js' />" defer></script>
     <script src="<c:url value='resources/js/danggeunwrite.js' />"></script>
@@ -52,37 +52,58 @@
         </nav>
     </header>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#listBtn").on("click", function(){
+			location.href = "<c:url value='/danggeun/list?option=${option}' />"
+		})
+		
+		$("#writeBtn").on("click", function(){
+			let form = $("#form")
+			
+			form.attr("action", "<c:url value='/danggeun/write' />")
+			form.attr("method", "post")
+			
+			form.submit()
+		})
+	})
+</script>
+
+    <script type="text/javascript">
+    	let msg = "${msg}"
+    	if(msg == "WRT_ERR") alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.")
+    	if(msg == "MOD_ERR") alert("게시물 수정에 실패하였습니다. 다시 시도해 주세요.")
+	</script>
+
     <div class="board_wrap">
         <div class="board_title">
             <h2 class="dangguen-title">댕근마켓</h2>
         </div>
         <div class="board_write_wrap">
-            <div class="board_write">
+            <form action="" id="form" class="board_write" method="post">
                 <div class="title">
                     <dl>
-                        <dd><input type="text" placeholder="제목 입력"></dd>
+                        <dd><input type="text" name="title" placeholder="제목 입력">${danggeunDTO.title}</dd>
                     </dl>
                 </div>
                 <section class="dangguen-sec">
                     <div class="info">
                         <dl>
-                            <dd> <input type="text" id="price" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
-                                원</dd>
+                            <dd> <input type="text" id="price" name="price" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
+                                ${danggeunDTO.price}원</dd>
                         </dl>
                         <div id="dangguen-img">
 
-                            <select class="form-select" aria-label="category">
-                                <optgroup label="카테고리">
-                                    <option selected>카테고리</option>
-                                    <option value="1">사료/간식</option>
-                                    <option value="2">영양제</option>
-                                    <option value="3">산책 용품</option>
-                                    <option value="4">집/방석</option>
-                                    <option value="5">옷/악세사리</option>
-                                    <option value="6">위생 용품</option>
-                                    <option value="7">기타 용품</option>
-                                </optgroup>
-                            </select>
+				            <select class="form-select" aria-label="category" name="option">
+				                    <option value="0" ${option == "0" || option == "" ? "selected" : "" }>전체</option>
+				                    <option value="1" ${option == "1" ? "selected" : "" }>사료/간식</option>
+				                    <option value="2" ${option == "2" ? "selected" : "" }>영양제</option>
+				                    <option value="3" ${option == "3" ? "selected" : "" }>산책 용품</option>
+				                    <option value="4" ${option == "4" ? "selected" : "" }>집/방석</option>
+				                    <option value="5" ${option == "5" ? "selected" : "" }>옷/악세사리</option>
+				                    <option value="6" ${option == "6" ? "selected" : "" }>위생 용품</option>
+				                    <option value="7" ${option == "7" ? "selected" : "" }>기타 용품</option>
+				            </select>
                             <select class="form-select" name="addressRegion" id="addressRegion1"></select>
                             <select class="form-select" name="addressDo" id="addressDo1"></select>
                             <select class="form-select" name="addressSiGunGu" id="addressSiGunGu1"></select>
@@ -95,15 +116,16 @@
 
                     </div>
                     <div class="cont">
-
-                        <textarea placeholder="내용 입력"></textarea>
+                        <textarea name="content" placeholder="내용 입력">
+                        	${danggeunDTO.content }
+                        </textarea>
                     </div>
-            </div>
+            </section>
             <div class="bt_wrap">
-                <a href="dangguenView.html" class="on">등록</a>
-                <a href="dangguen.html">취소</a>
+                <button type="button" id="writeBtn" class="on">등록</button>
+                <button type="button" id="listBtn">목록</button>
             </div>
-        </div>
+        </form>
     </div>
     <!--가격 입력시 숫자만 입력/자동으로 ,-->
     <script>

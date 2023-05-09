@@ -83,6 +83,14 @@ FROM danggeun_type
 WHERE id = 1;
 
 
+drop table if exists store_danggeun;
+create table store_danggeun(
+	member_email varchar(50),
+	danggeun_id Integer,
+	primary key(member_email, danggeun_id),
+	foreign key (member_email) references dang_member(email),
+	foreign key (danggeun_id) references danggeun(id)
+);
 
 
 

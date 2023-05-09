@@ -16,7 +16,9 @@ public class DanggeunServiceImpl implements DanggeunService {
 
 	@Override
 	public DanggeunDTO read(Integer id) throws Exception {
-		return danggeunDAO.select(id);
+		DanggeunDTO danggeunDTO = danggeunDAO.select(id);
+		danggeunDAO.addViewCnt(id);
+		return danggeunDTO;
 	}
 
 	@Override
@@ -25,13 +27,23 @@ public class DanggeunServiceImpl implements DanggeunService {
 	}
 	
 	@Override
-	public List<DanggeunDTO> searchItems(Integer type_id, Integer local_id) throws Exception {
-		return danggeunDAO.selectBySearch(type_id, local_id);
+	public List<DanggeunDTO> searchItems(Integer type_id) throws Exception {
+		return danggeunDAO.selectByType(type_id);
 	}
 
 	@Override
 	public int register(DanggeunDTO danggeunDTO) throws Exception {
 		return danggeunDAO.insert(danggeunDTO);
-	}	
+	}
+
+	@Override
+	public int storeProduct(Integer id, String writer) throws Exception {
+		return danggeunDAO.insertStore(id, writer);
+	}
+
+	@Override
+	public int addCount(Integer id) throws Exception {
+		return danggeunDAO.addAddCnt(id);
+	}
 	
 }

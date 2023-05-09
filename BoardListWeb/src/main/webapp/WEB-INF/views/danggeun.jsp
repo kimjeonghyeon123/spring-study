@@ -56,24 +56,25 @@
         <h2 class="dangguen-title">댕근마켓</h2>
         <div class="alert alert-light" id="dangguen-head" role="alert">
 
-
-            <select class="form-select" aria-label="category">
-                <optgroup label="카테고리">
-                    <option selected>전체</option>
-                    <option value="1">사료/간식</option>
-                    <option value="2">영양제</option>
-                    <option value="3">산책 용품</option>
-                    <option value="4">집/방석</option>
-                    <option value="5">옷/악세사리</option>
-                    <option value="6">위생 용품</option>
-                    <option value="7">기타 용품</option>
+		<form action="<c:url value='/danggeun/list' />" method="get">
+            <select class="form-select" aria-label="category" name="option">
+                    <option value="0" ${option == "0" || option == "" ? "selected" : "" }>전체</option>
+                    <option value="1" ${option == "1" ? "selected" : "" }>사료/간식</option>
+                    <option value="2" ${option == "2" ? "selected" : "" }>영양제</option>
+                    <option value="3" ${option == "3" ? "selected" : "" }>산책 용품</option>
+                    <option value="4" ${option == "4" ? "selected" : "" }>집/방석</option>
+                    <option value="5" ${option == "5" ? "selected" : "" }>옷/악세사리</option>
+                    <option value="6" ${option == "6" ? "selected" : "" }>위생 용품</option>
+                    <option value="7" ${option == "7" ? "selected" : "" }>기타 용품</option>
             </select>
 
             <select class="form-select" name="addressRegion" id="addressRegion1"></select>
             <select class="form-select" name="addressDo" id="addressDo1"></select>
             <select class="form-select" name="addressSiGunGu" id="addressSiGunGu1"></select>
-            <button type="button" class="btn-search"><a href="#">검색</a></button>
-            <button type="button" class="btn-write"><a href="dangguenwrite.html">글쓰기</a></button>
+            <button type="submit" class="btn-search">검색</button>
+        </form>
+        
+            <button type="button" class="btn-write"><a href="<c:url value='/danggeun/write?option=${option}' />">글쓰기</a></button>
 
         </div>
     </section>
@@ -246,7 +247,7 @@
 	                        <div class="card-body p-4">
 	                            <div class="text-center">
 	                                <!-- Product name-->
-	                                <h5 class="fw-bolder"><a href="<c:url value='/danggeun/view?id=${danggeundto.id}' />">${danggeundto.title}</a></h5>
+	                                <h5 class="fw-bolder"><a href="<c:url value='/danggeun/view?id=${danggeundto.id}&option=${option}' />">${danggeundto.title}</a></h5>
 	                                <!-- Product price-->
 	                                ${danggeundto.price}원
 	                                <li id="user-adress"><a>${danggeundto.local_id}</a></li>

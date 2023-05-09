@@ -28,16 +28,39 @@ public class DanggeunDAOImpl implements DanggeunDAO {
 	}
 
 	@Override
-	public List<DanggeunDTO> selectBySearch(Integer type_id, Integer local_id) throws Exception {
-		Map map = new HashMap();
-		map.put("type_id", type_id);
-		map.put("local_id", local_id);
-		return session.selectList(namespace + "selectBySearch", map);
+	public List<DanggeunDTO> selectByType(Integer type_id) throws Exception {
+		return session.selectList(namespace + "selectByType", type_id);
 	}
 
 	@Override
 	public int insert(DanggeunDTO danggeunDTO) throws Exception {
 		return session.insert(namespace + "insert", danggeunDTO);
+	}
+
+	@Override
+	public int delete(Integer id, String writer) throws Exception {
+		Map map = new HashMap();
+		map.put("id", id);
+		map.put("writer", writer);
+		return session.delete(namespace + "delete", map);
+	}
+
+	@Override
+	public int addViewCnt(Integer id) throws Exception {
+		return session.update(namespace + "addViewCnt", id);
+	}
+
+	@Override
+	public int addAddCnt(Integer id) throws Exception {
+		return session.selectOne(namespace + "addAddCnt", id);
+	}
+
+	@Override
+	public int insertStore(Integer id, String writer) throws Exception {
+		Map map = new HashMap();
+		map.put("id", id);
+		map.put("writer", writer);
+		return session.insert(namespace + "insertStore", map);
 	}
 	
 	

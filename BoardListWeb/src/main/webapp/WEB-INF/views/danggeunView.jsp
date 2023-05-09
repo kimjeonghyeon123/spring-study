@@ -115,7 +115,7 @@
 
             <div class="bt_wrap">
                 <a href="chat.html" class="on">채팅</a>
-                <a href="<c:url value='/danggeun/list' />">목록</a>
+                <a href="<c:url value='/danggeun/list?option=${option}' />">목록</a>
             </div>
 
         </div>
