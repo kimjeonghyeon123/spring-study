@@ -1,29 +1,63 @@
-1. ì „ì²´ ê²Œì‹œë¬¼ ê°€ì ¸ì˜¤ê¸°
-	- ìƒí’ˆ ì¢…ë¥˜
-	- ì§€ì—­
-
-2. ê²Œì‹œë¬¼ì—ì„œ í‘œí˜„í•´ì•¼ í•  ê²ƒ
-	- ìƒí’ˆ ì‚¬ì§„
-	- ìƒí’ˆ ì´ë¦„
-	- ìƒí’ˆ ê°€ê²©
-	- ì§€ì—­
-	- íŒë§¤ì
-	- êµ¬ë§¤í•˜ê¸°, ì°œ
-
-3. ê¸€ì“°ê¸°, ê²€ìƒ‰
-
-select	- ê²Œì‹œë¬¼ í•˜ë‚˜ ê°€ì ¸ì˜¤ê¸°
-selectAll  - ê²Œì‹œë¬¼ ì „ì²´ ê°€ì ¸ì˜¤ê¸°
-select	- ê²€ìƒ‰ì¡°ê±´ì— ë”°ë¥¸ ê²Œì‹œë¬¼ ê°€ì ¸ì˜¤ê¸°
+µ¥ÀÌÅÍº£ÀÌ½º Å×ÀÌºí ÇÏ³ª ´ç ¸¸µé¾î¾ß µÉ °Í
+- DTO Å¬·¡½º
+- Mapper.xml
+	- ÇØ´ç Å×ÀÌºí ³»¿¡¼­ º¯È­°¡ ÀÏ¾î³ª´Â °ÍÀ» ¸¸µé¾î³õ¾Æ¾ß ÇÔ
 
 
-4. ìƒí’ˆ ëˆŒë €ì„ ë•Œ
-	- ì œëª©
-	- íŒë§¤ì
-	- ì‘ì„±ì¼
-	- ê°€ê²©
-	- ì¡°íšŒìˆ˜
-	- ì§€ì—­
-	- ì‚¬ì§„
-	- ë‚´ìš©
+ex)
+°Ô½Ã¹°¿¡ ´ñ±ÛÀ» ´Ş¾ÒÀ» ¶§
+	- ´ñ±Û Å×ÀÌºí¿¡ ´ñ±ÛÀ» insert ÇÑ´Ù.
+	- º¸µåÀÇ ´ñ±Û ¼ö¸¦ 1 ¿Ã¸°´Ù.
+	- CommentService¿¡¼­ 
+		- CommentDAO¿¡¼­ ´ñ±Û µ¥ÀÌÅÍ ³ÖÀ½
+		- BoardDAO¿¡¼­ ´ñ±Û ¼ö 1 ¿Ã¸²
+
+
+´ó±Ù ¸¶ÄÏ Å¬¸¯ ½Ã ºÒ·¯¿Í¾ß µÉ °Í
+¾Æ·¡ º¯¼öµéÀº service ´Ü¿¡¼­ Ã³¸®ÇØÁÖ¸é µÊ
+»óÇ°dto - ·Î±×ÀÎÇÑ À¯Àú°¡ Âò Çß´ÂÁö ¿©ºÎ º¯¼ö Ãß°¡
+»óÇ°dto - ·Î±×ÀÎÇÑ À¯ÀúÀÇ ÀÌ¸§ º¯¼ö Ãß°¡
+- »óÇ° Å¸ÀÔ
+	- danggeun_type Å×ÀÌºí
+- ÆÇ¸Å Áö¿ª
+	- local Å×ÀÌºí
+- »óÇ° ¸®½ºÆ®
+	- danggeun Å×ÀÌºí
+	- local ÀÌ¸§
+	- Âò Çß´ÂÁö ¿©ºÎ
+- »óÇ° Âò Çß´ÂÁö
+	- useremail·Î °Ë»öÇØ¼­ »óÇ° id ¹Ş¾Æ¿È
+	- id
+
+drop table if exists danggeun;
+create table danggeun(
+	id 			serial 		primary key,-- »óÇ°¾ÆÀÌµğ
+	title		varchar(50) not null,	-- »óÇ°°Ô½Ã¹°Á¦¸ñ
+	name 		varchar(50) not null,	-- »óÇ°ÀÌ¸§
+	type_id		Integer		not null,	-- »óÇ°Å¸ÀÔ
+	local_id	Integer		not null,	-- ÆÇ¸ÅÁö¿ª
+	price		int			not null,	-- »óÇ°°¡°İ
+	content 	text 		not null,	-- »óÇ°¼³¸í
+	writer 		varchar(50) not null,	-- ÆÇ¸ÅÀÚ
+	view_cnt 	int 		default 0,	-- Á¶È¸¼ö
+	add_cnt		int			default 0,	-- Âò ¼ö
+	reg_date 	date 		default current_timestamp,
+	up_date 	date 		default current_timestamp,
+	foreign key (type_id) references danggeun_type(id)
+);
+
+create table danggeun_type(
+	id serial primary key,
+	name varchar(50) not null
+);
+
+drop table if exists store_danggeun;
+create table store_danggeun(
+	member_email varchar(50),
+	danggeun_id Integer,
+	primary key(member_email, danggeun_id),
+	foreign key (member_email) references dang_member(email),
+	foreign key (danggeun_id) references danggeun(id)
+);
+
 
