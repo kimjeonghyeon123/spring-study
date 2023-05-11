@@ -7,9 +7,7 @@ public class DangMemberDTO {
 	private String pwd;
 	private String name;
 	
-	public DangMemberDTO() {
-		this("", "", "");
-	}
+	public DangMemberDTO() {}
 
 	public DangMemberDTO(String email, String pwd, String name) {
 		this.email = email;

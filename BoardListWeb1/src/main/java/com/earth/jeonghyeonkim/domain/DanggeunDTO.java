@@ -10,28 +10,27 @@ public class DanggeunDTO {
 	private String name;
 	private Integer type_id;
 	private Integer local_id;
-	private String local_name;
+	private String local_name;		//추가
 	private int price;
 	private String content;
-	private String writer;
+	private String writer_email;
+	private String writer_name;		//추가
 	private int view_cnt;
 	private int add_cnt;
 	private Date reg_date;
 	private Date up_date;
+	private boolean isStoreByCurrentMember = false; // 추가
 	
-	public DanggeunDTO() {
-		this("", "", 0, 0, 0, "", "");
-	}
+	public DanggeunDTO() {}
 	
-	public DanggeunDTO(String title, String name, Integer type_id, Integer local_id, int price, String content,
-			String writer) {
+	public DanggeunDTO(String title, String name, Integer type_id, Integer local_id, int price, String content, String writer_email) {
 		this.title = title;
 		this.name = name;
 		this.type_id = type_id;
 		this.local_id = local_id;
 		this.price = price;
 		this.content = content;
-		this.writer = writer;
+		this.writer_email = writer_email;
 	}
 
 	public Integer getId() {
@@ -74,6 +73,14 @@ public class DanggeunDTO {
 		this.local_id = local_id;
 	}
 
+	public String getLocal_name() {
+		return local_name;
+	}
+
+	public void setLocal_name(String local_name) {
+		this.local_name = local_name;
+	}
+
 	public int getPrice() {
 		return price;
 	}
@@ -90,12 +97,20 @@ public class DanggeunDTO {
 		this.content = content;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getWriter_email() {
+		return writer_email;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setWriter_email(String writer_email) {
+		this.writer_email = writer_email;
+	}
+
+	public String getWriter_name() {
+		return writer_name;
+	}
+
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
 	}
 
 	public int getView_cnt() {
@@ -130,10 +145,18 @@ public class DanggeunDTO {
 		this.up_date = up_date;
 	}
 
+	public boolean isStoreByCurrentMember() {
+		return isStoreByCurrentMember;
+	}
+
+	public void setStoreByCurrentMember(boolean isStoreByCurrentMember) {
+		this.isStoreByCurrentMember = isStoreByCurrentMember;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(add_cnt, content, id, local_id, name, price, reg_date, title, type_id, up_date, view_cnt,
-				writer);
+		return Objects.hash(add_cnt, content, id, isStoreByCurrentMember, local_id, local_name, name, price, reg_date,
+				title, type_id, up_date, view_cnt, writer_email, writer_name);
 	}
 
 	@Override
@@ -146,10 +169,12 @@ public class DanggeunDTO {
 			return false;
 		DanggeunDTO other = (DanggeunDTO) obj;
 		return add_cnt == other.add_cnt && Objects.equals(content, other.content) && Objects.equals(id, other.id)
-				&& Objects.equals(local_id, other.local_id) && Objects.equals(name, other.name) && price == other.price
-				&& Objects.equals(reg_date, other.reg_date) && Objects.equals(title, other.title)
-				&& Objects.equals(type_id, other.type_id) && Objects.equals(up_date, other.up_date)
-				&& view_cnt == other.view_cnt && Objects.equals(writer, other.writer);
+				&& isStoreByCurrentMember == other.isStoreByCurrentMember && Objects.equals(local_id, other.local_id)
+				&& Objects.equals(local_name, other.local_name) && Objects.equals(name, other.name)
+				&& price == other.price && Objects.equals(reg_date, other.reg_date)
+				&& Objects.equals(title, other.title) && Objects.equals(type_id, other.type_id)
+				&& Objects.equals(up_date, other.up_date) && view_cnt == other.view_cnt
+				&& Objects.equals(writer_email, other.writer_email) && Objects.equals(writer_name, other.writer_name);
 	}
-
+	
 }

@@ -2,19 +2,15 @@ package com.earth.jeonghyeonkim.domain;
 
 import java.util.Objects;
 
-//id serial primary key,
-//name varchar(50) not null
-
 public class DanggeunTypeDTO {
-	private Integer id;
-	private String name;
+	private Integer id 		= 0;
+	private String 	name 	= "전체";
 	
-	public DanggeunTypeDTO() {
-		this("");
-	}
+	public DanggeunTypeDTO() {}
 	
-	public DanggeunTypeDTO(String name) {
-		this.name = name;
+	public DanggeunTypeDTO(Integer id, String name) {
+		this.id 	= id;
+		this.name 	= name;
 	}
 
 	public Integer getId() {

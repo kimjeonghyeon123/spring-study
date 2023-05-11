@@ -4,65 +4,43 @@
 	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.earth.jeonghyeonkim.dao.DanggeunMapper">
-
-	<sql id="selectFromDanggeun">
-		SELECT id, title, name, type_id, local_id, price, content, writer, view_cnt, add_cnt, reg_date, up_date
-		FROM danggeun
-	</sql>
-
-	<select id="select" parameterType="int" resultType="DanggeunDto">
-		<include refid="selectFromDanggeun"/>
-		WHERE id = #{id}
-	</select>
 	
+	<!-- 전체 상품 목록 조회할 때 사용 -->
 	<select id="selectAll" resultType="DanggeunDto">
-		<include refid="selectFromDanggeun"/>
+		SELECT id, title, name, type_id, local_id, price, content, writer_email, view_cnt, zzim_cnt, reg_date, up_date
+		FROM danggeun
 		ORDER BY reg_date desc, id desc
-	</select>
+	</select>	
 	
-	<select id="selectByType" parameterType="int" resultType="DanggeunDto">
-		<include refid="selectFromDanggeun"/>
+	<!-- type_id를 이용해서 상품목록을 조회할 때 사용 -->
+	<!-- 가장 최근에 등록한 상품이 위로 오게 함 -->
+	<select id="selectByOption" parameterType="int" resultType="DanggeunDto">
+		SELECT id, title, name, type_id, local_id, price, content, writer_email, view_cnt, zzim_cnt, reg_date, up_date
+		FROM danggeun
 		WHERE type_id = #{type_id}
 		ORDER BY reg_date desc, id desc
-	</select>
-	
-	<insert id="insert" parameterType="DanggeunDto">
-		INSERT INTO danggeun(title, name, type_id, local_id, price, content, writer)
-		VALUES(#{title}, #{name}, #{type_id}, #{local_id}, #{price}, #{content}, #{writer})
-	</insert>
-	
-	<delete id="delete" parameterType="map">
-		DELETE FROM danggeun
-		WHERE id=#{id} AND writer = #{writer}
-	</delete>
+	</select>		
 
-	<update id="addViewCnt" parameterType="int">
-		UPDATE danggeun
-		SET view_cnt = view_cnt + 1
+	<!-- 게시물 하나를 읽을 때 사용 -->
+	<select id="select" parameterType="int" resultType="DanggeunDto">
+		SELECT id, title, name, type_id, local_id, price, content, writer_email, view_cnt, zzim_cnt, reg_date, up_date
+		FROM danggeun
 		WHERE id = #{id}
+	</select>
+	
+	<!-- 게시물을 읽으면 조회수가 올라가게 할 때 사용 -->
+	<update id="increaseViewCnt">
+		UPDATE danggeun
+		SET	view_cnt = view_cnt + 1
+		WHERE id = #{id}	
 	</update>
-
-	<select id="addAddCnt" parameterType="int" resultType="int">
-		SELECT COUNT(*)
-		FROM store_danggeun
-		WHERE id=#{id}
-	</select>
 	
-	<insert id="insertStore" parameterType="map">
-		INSERT INTO store_danggeun
-		VALUES(#{id}, #{writer})
-	</insert>
-	
-	<select id="storeid" parameterType="String" resultType="int">
-		SELECT danggeun_id
-		FROM store_danggeun
-		WHERE member_email = #{email}
-	</select>
-	
-	<delete id="deletestore" parameterType="map">
-		DELETE FROM store_danggeun
-		WHERE danggeun_id = #{danggeun_id} AND member_email = #{email}
-	</delete>
+	<!-- 게시물을 찜하거나 취소할 때 찜 수를 변경할 때 사용 -->
+	<update id="updateZzimCnt" parameterType="map">
+		UPDATE danggeun
+		SET	zzim_cnt = zzim_cnt + #{cnt}
+		WHERE id = #{id}	
+	</update>
 </mapper>
 
 

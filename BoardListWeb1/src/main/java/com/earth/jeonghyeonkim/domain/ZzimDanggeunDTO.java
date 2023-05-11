@@ -1,12 +1,12 @@
 package com.earth.jeonghyeonkim.domain;
 
-public class StoreDanggeunDTO {
+public class ZzimDanggeunDTO {
 	private String member_email;
 	private Integer danggeun_id;
 	
-	public StoreDanggeunDTO() {}
+	public ZzimDanggeunDTO() {}
 
-	public StoreDanggeunDTO(String member_email, Integer danggeun_id) {
+	public ZzimDanggeunDTO(String member_email, Integer danggeun_id) {
 		this.member_email = member_email;
 		this.danggeun_id = danggeun_id;
 	}

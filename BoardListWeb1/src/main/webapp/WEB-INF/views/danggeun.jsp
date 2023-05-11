@@ -56,15 +56,10 @@
         <div class="alert alert-light" id="dangguen-head" role="alert">
 
 		<form action="<c:url value='/danggeun/list' />" method="get">
-            <select class="form-select" aria-label="category" name="option">
-                    <option value="0" ${option == "0" || option == "" ? "selected" : "" }>전체</option>
-                    <option value="1" ${option == "1" ? "selected" : "" }>사료/간식</option>
-                    <option value="2" ${option == "2" ? "selected" : "" }>영양제</option>
-                    <option value="3" ${option == "3" ? "selected" : "" }>산책 용품</option>
-                    <option value="4" ${option == "4" ? "selected" : "" }>집/방석</option>
-                    <option value="5" ${option == "5" ? "selected" : "" }>옷/악세사리</option>
-                    <option value="6" ${option == "6" ? "selected" : "" }>위생 용품</option>
-                    <option value="7" ${option == "7" ? "selected" : "" }>기타 용품</option>
+            <select class="form-select" aria-label="category" name="type_id">
+                    <c:forEach var="DanggeunTypeDTO" items="${typeList}">
+                    	<option value="${DanggeunTypeDTO.id}" ${type_id == DanggeunTypeDTO.id || type_id eq null ? "selected" : ""}>${DanggeunTypeDTO.name}</option>
+                    </c:forEach>
             </select>
 
             <select class="form-select" name="addressRegion" id="addressRegion1"></select>
@@ -73,7 +68,7 @@
             <button type="submit" class="btn-search">검색</button>
         </form>
         
-            <button type="button" class="btn-write"><a href="<c:url value='/danggeun/write?option=${option}' />">글쓰기</a></button>
+            <button type="button" class="btn-write"><a href="<c:url value='/danggeun/write?type_id=${type_id}' />">글쓰기</a></button>
 
         </div>
     </section>
