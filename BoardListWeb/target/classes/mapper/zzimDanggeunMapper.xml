@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.earth.jeonghyeonkim.dao.ZzimDanggeunMapper">
+	
+	<!-- 찜 데이터 있는지 확인하기 있으면 1, 없으면 0 -->
+	<select id="selectcount" parameterType="ZzimDanggeunDto" resultType="int">
+		SELECT COUNT(*)
+		FROM zzim_danggeun
+		WHERE member_email = #{member_email} AND danggeun_id = #{danggeun_id}
+	</select>
+	
+	<!-- email로 멤버가 찜한 상품id 리스트 가져오기 -->
+	<select id="selectByMemberEmail" parameterType="String" resultType="int">
+		SELECT danggeun_id
+		FROM zzim_danggeun
+		WHERE member_email = #{member_email}
+	</select>
+	
+	<!-- 상품id로 상품을 찜한 멤버 리스트 가져오기 -->
+	<select id="selectByDanggeunId" parameterType="int" resultType="String">
+		SELECT member_email
+		FROM zzim_danggeun
+		WHERE danggeun_id = #{danggeun_id}
+	</select>
+	
+	<!-- 상품이 팔리거나 글을 삭제했을 때 사용 -->
+	<delete id="deleteAllByDanggeunId" parameterType="int">
+		DELETE FROM zzim_danggeun
+		WHERE danggeun_id = #{danggeun_id}
+	</delete>
+	
+	<!-- 멤버가 탈퇴하거나 찜한 목록을 다 취소할 때 사용 -->
+	<!-- 해당된 상품들의 찜 수를 다 내려야 됨 -->
+	<delete id="deleteAllByMemberEmail" parameterType="String">
+		DELETE FROM zzim_danggeun
+		WHERE member_email = #{member_email}
+	</delete>
+	
+	<!-- 멤버가 상품 찜을 취소했을 때 사용 -->
+	<!-- 해당 상품의 찜 숫자가 내려가야 됨 -->
+	<delete id="delete" parameterType="ZzimDanggeunDto">
+		DELETE FROM zzim_danggeun
+		WHERE member_email = #{member_email} AND danggeun_id = #{danggeun_id}
+	</delete>
+	
+	<!-- 멤버가 상품 찜하기 눌렀을 때 사용 -->
+	<!-- 해당 상품의 찜 숫자가 올라가야 됨 -->
+	<insert id="insert" parameterType="ZzimDanggeunDto">
+		INSERT INTO zzim_danggeun(member_email, danggeun_id)
+		VALUES(#{member_email}, #{danggeun_id})
+	</insert>
+	
+</mapper>
