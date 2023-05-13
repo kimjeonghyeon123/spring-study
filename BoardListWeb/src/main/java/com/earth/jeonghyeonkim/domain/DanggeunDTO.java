@@ -16,7 +16,7 @@ public class DanggeunDTO {
 	private String writer_email;
 	private String writer_name;		//추가
 	private int view_cnt;
-	private int add_cnt;
+	private int zzim_cnt;
 	private Date reg_date;
 	private Date up_date;
 	private boolean isStoreByCurrentMember = false; // 추가
@@ -121,12 +121,12 @@ public class DanggeunDTO {
 		this.view_cnt = view_cnt;
 	}
 
-	public int getAdd_cnt() {
-		return add_cnt;
+	public int getZzim_cnt() {
+		return zzim_cnt;
 	}
 
-	public void setAdd_cnt(int add_cnt) {
-		this.add_cnt = add_cnt;
+	public void setZzim_cnt(int zzim_cnt) {
+		this.zzim_cnt = zzim_cnt;
 	}
 
 	public Date getReg_date() {
@@ -155,7 +155,7 @@ public class DanggeunDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(add_cnt, content, id, isStoreByCurrentMember, local_id, local_name, name, price, reg_date,
+		return Objects.hash(zzim_cnt, content, id, isStoreByCurrentMember, local_id, local_name, name, price, reg_date,
 				title, type_id, up_date, view_cnt, writer_email, writer_name);
 	}
 
@@ -168,13 +168,22 @@ public class DanggeunDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		DanggeunDTO other = (DanggeunDTO) obj;
-		return add_cnt == other.add_cnt && Objects.equals(content, other.content) && Objects.equals(id, other.id)
+		return zzim_cnt == other.zzim_cnt && Objects.equals(content, other.content) && Objects.equals(id, other.id)
 				&& isStoreByCurrentMember == other.isStoreByCurrentMember && Objects.equals(local_id, other.local_id)
 				&& Objects.equals(local_name, other.local_name) && Objects.equals(name, other.name)
 				&& price == other.price && Objects.equals(reg_date, other.reg_date)
 				&& Objects.equals(title, other.title) && Objects.equals(type_id, other.type_id)
 				&& Objects.equals(up_date, other.up_date) && view_cnt == other.view_cnt
 				&& Objects.equals(writer_email, other.writer_email) && Objects.equals(writer_name, other.writer_name);
+	}
+
+	@Override
+	public String toString() {
+		return "DanggeunDTO [id=" + id + ", title=" + title + ", name=" + name + ", type_id=" + type_id + ", local_id="
+				+ local_id + ", local_name=" + local_name + ", price=" + price + ", content=" + content
+				+ ", writer_email=" + writer_email + ", writer_name=" + writer_name + ", view_cnt=" + view_cnt
+				+ ", zzim_cnt=" + zzim_cnt + ", reg_date=" + reg_date + ", up_date=" + up_date
+				+ ", isStoreByCurrentMember=" + isStoreByCurrentMember + "]";
 	}
 	
 }

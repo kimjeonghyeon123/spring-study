@@ -13,15 +13,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="<c:url value='/resources/css/danggeun.css' />">
+	<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
-    <script src="<c:url value='/resources/js/danggeun.js' />"></script>
-    <script src="<c:url value='/resources/js/toggle.js' />" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
-        crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Gothic:wght@400;700;800&display=swap"
         rel="stylesheet">
 
@@ -72,12 +65,23 @@
                         <dd>${danggeunDTO.reg_date}</dd>
                     </dl>
                     <dl>
-                        <dt>조회</dt>
+                        <dt>조회수</dt>
                         <dd>${danggeunDTO.view_cnt}</dd>
                     </dl>
                     <dl>
-                        <dd>${danggeunDTO.local_id}</dd>
+                   		<dt>찜 수</dt>
+                        <dd>${danggeunDTO.zzim_cnt}</dd>
                     </dl>
+                    <dl>
+                    	<c:if test="${danggeunDTO.writer_email ne loginEmail}">
+		                    <c:if test="${danggeunDTO.isStoreByCurrentMember == true}">
+								<button type="button" class="btnscrap storeBtn" data-id="${danggeunDTO.id}" data-writeremail="${danggeunDTO.writer_email}" data-loginemail="${loginEmail}" style="background-color: red;">찜♥</button>
+							</c:if>
+							<c:if test="${danggeunDTO.isStoreByCurrentMember == false}">
+								<button type="button" class="btnscrap storeBtn" data-id="${danggeunDTO.id}" data-writeremail="${danggeunDTO.writer_email}" data-loginemail="${loginEmail}">찜♥</button>
+							</c:if>
+						</c:if>
+					</dl>
                 </div>
                 <div class="slideshow-container">
 
@@ -114,11 +118,55 @@
             </div>
 
             <div class="bt_wrap">
-                <a href="chat.html" class="on">채팅</a>
-                <a href="<c:url value='/danggeun/list?type_id=${type_id}' />">목록</a>
+            	<c:if test="${danggeunDTO.writer_email eq loginEmail}">
+                    <button type="button" id="modifyBtn">수정</button>
+                </c:if>
+                <c:if test="${danggeunDTO.writer_email ne loginEmail}">
+                	<a href="chat.html" class="on">채팅</a>	
+                </c:if>
+                <a href="<c:url value='/danggeun/list' />">목록</a>
             </div>
 
         </div>
+	</div>
+	
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".storeBtn").on('click', function() {
+            var button = $(this); // 버튼 객체를 저장
+            var id = $(this).data('id')
+            var loginemail = $(this).data('loginemail')
+            var writeremail = $(this).data('writeremail')
+            
+            if(loginemail == writeremail) {
+            	return alert("본인 상품을 찜할 수 없습니다.")
+            }
+            
+            $.ajax({
+                type: 'POST',
+                url: '/jeonghyeonkim/danggeun/togglezzim',
+                data: {
+                    'danggeun_id': id,
+                    'member_email': loginemail
+                },
+                success: function(response) {
+	            	if (response == "added") {
+                        button.css('background-color', 'red');
+                    } else if (response == "removed") {
+                        button.css('background-color', '');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("error");
+                }
+            });
+        });
+        
+        $("#modifyBtn").on('click', function(){
+        	location.href = "<c:url value='/danggeun/write?id=${danggeunDTO.id}' />"
+        })
+    });
+</script>
 </body>
 
 </html>

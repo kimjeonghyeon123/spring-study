@@ -26,7 +26,7 @@ public class ZzimDanggeunDAOImpl implements ZzimDanggeunDAO {
 	}
 
 	@Override
-	public List<String> selectByMemberEmail(Integer danggeun_id) throws Exception {
+	public List<String> selectByDanggeunId(Integer danggeun_id) throws Exception {
 		return session.selectList(namespace + "selectByMemberEmail", danggeun_id);
 	}
 

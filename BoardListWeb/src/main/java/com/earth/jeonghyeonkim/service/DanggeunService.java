@@ -13,6 +13,11 @@ public interface DanggeunService {
 	
 	//게시물 하나를 읽을 때 사용
 	//게시물의 조회수가 올라감
-	DanggeunDTO readDanggeun(Integer id) throws Exception;
+	DanggeunDTO readDanggeun(Integer id, String login_email) throws Exception;
 	
+	//게시물 정보 가져오기
+	DanggeunDTO loadDanggeun(Integer id) throws Exception;
+	
+	//상픔 등록하기
+	int registerDanggeun(DanggeunDTO danggeunDTO) throws Exception;
 }

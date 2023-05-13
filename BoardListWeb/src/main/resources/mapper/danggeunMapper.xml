@@ -6,7 +6,7 @@
 <mapper namespace="com.earth.jeonghyeonkim.dao.DanggeunMapper">
 	
 	<!-- 전체 상품 목록 조회할 때 사용 -->
-	<select id="selectAll" resultType="DanggeunDto">
+	<select id="selectAll"  resultType="DanggeunDto">
 		SELECT id, title, name, type_id, local_id, price, content, writer_email, view_cnt, zzim_cnt, reg_date, up_date
 		FROM danggeun
 		ORDER BY reg_date desc, id desc
@@ -14,7 +14,7 @@
 	
 	<!-- type_id를 이용해서 상품목록을 조회할 때 사용 -->
 	<!-- 가장 최근에 등록한 상품이 위로 오게 함 -->
-	<select id="selectByOption" parameterType="int" resultType="DanggeunDto">
+	<select id="selectByOption"  parameterType="int" resultType="DanggeunDto">
 		SELECT id, title, name, type_id, local_id, price, content, writer_email, view_cnt, zzim_cnt, reg_date, up_date
 		FROM danggeun
 		WHERE type_id = #{type_id}

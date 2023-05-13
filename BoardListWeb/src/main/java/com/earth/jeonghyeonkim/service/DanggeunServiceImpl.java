@@ -47,10 +47,22 @@ public class DanggeunServiceImpl implements DanggeunService {
 	}
 
 	@Override
-	public DanggeunDTO readDanggeun(Integer id) throws Exception {
+	public DanggeunDTO readDanggeun(Integer id, String login_email) throws Exception {
 		DanggeunDTO danggeunDTO = (DanggeunDTO) danggeunDAO.select(id);
+		danggeunDTO.setWriter_name(dangMemberDAO.selectMemberName(danggeunDTO.getWriter_email()));
+		danggeunDTO.setIsStoreByCurrentMember(zzimDanggeunDAO.selectcount(new ZzimDanggeunDTO(login_email, id)) == 1);
 		danggeunDAO.increaseViewCnt(id);
 		return danggeunDTO;
+	}
+
+	@Override
+	public DanggeunDTO loadDanggeun(Integer id) throws Exception {
+		return danggeunDAO.select(id);
+	}
+
+	@Override
+	public int registerDanggeun(DanggeunDTO danggeunDTO) throws Exception {
+		return danggeunDAO.insert(danggeunDTO);
 	}
 	
 	

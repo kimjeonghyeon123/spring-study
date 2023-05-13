@@ -13,15 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<c:url value='/resources/css/danggeun.css' />">
     <script src="https://kit.fontawesome.com/cac1ec65f4.js" crossorigin="anonymous"></script>
-    <script src="<c:url value='resources/js/toggle.js' />" defer></script>
-    <script src="<c:url value='resources/js/danggeunwrite.js' />"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
-        crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Nanum+Gothic:wght@400;700;800&display=swap"
         rel="stylesheet">
 
@@ -29,6 +21,7 @@
 </head>
 
 <body>
+	
     <header>
         <nav class="navbar">
 
@@ -52,57 +45,32 @@
         </nav>
     </header>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#listBtn").on("click", function(){
-			location.href = "<c:url value='/danggeun/list?option=${option}' />"
-		})
-		
-		$("#writeBtn").on("click", function(){
-			let form = $("#form")
-			
-			form.attr("action", "<c:url value='/danggeun/write' />")
-			form.attr("method", "post")
-			
-			form.submit()
-		})
-	})
-</script>
-
-    <script type="text/javascript">
-    	let msg = "${msg}"
-    	if(msg == "WRT_ERR") alert("게시물 등록에 실패하였습니다. 다시 시도해 주세요.")
-    	if(msg == "MOD_ERR") alert("게시물 수정에 실패하였습니다. 다시 시도해 주세요.")
-	</script>
-
     <div class="board_wrap">
         <div class="board_title">
             <h2 class="dangguen-title">댕근마켓</h2>
         </div>
         <div class="board_write_wrap">
-            <form action="" id="form" class="board_write" method="post">
+            <form action="<c:url value='/danggeun/write' />" id="form" class="board_write" method="post">
                 <div class="title">
                     <dl>
-                        <dd><input type="text" name="title" placeholder="제목 입력">${danggeunDTO.title}</dd>
+                        <dd><input type="text" name="title" value="${danggeunDTO.title}" placeholder="제목 입력"></dd>
                     </dl>
                 </div>
                 <section class="dangguen-sec">
                     <div class="info">
+                    	<dl>
+                    		<dd><input type="text" name="name" value="${loginEmail}" hidden></dd>
+                    	</dl>
                         <dl>
-                            <dd> <input type="text" id="price" name="price" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
-                                ${danggeunDTO.price}원</dd>
+                            <dd> <input type="text" id="price" name="price" value="${danggeunDTO.price}" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
+                                원</dd>
                         </dl>
                         <div id="dangguen-img">
 
-				            <select class="form-select" aria-label="category" name="option">
-				                    <option value="0" ${option == "0" || option == "" ? "selected" : "" }>전체</option>
-				                    <option value="1" ${option == "1" ? "selected" : "" }>사료/간식</option>
-				                    <option value="2" ${option == "2" ? "selected" : "" }>영양제</option>
-				                    <option value="3" ${option == "3" ? "selected" : "" }>산책 용품</option>
-				                    <option value="4" ${option == "4" ? "selected" : "" }>집/방석</option>
-				                    <option value="5" ${option == "5" ? "selected" : "" }>옷/악세사리</option>
-				                    <option value="6" ${option == "6" ? "selected" : "" }>위생 용품</option>
-				                    <option value="7" ${option == "7" ? "selected" : "" }>기타 용품</option>
+				            <select class="form-select" aria-label="category" name="type_id">
+				                    <c:forEach var="DanggeunTypeDTO" items="${typeList}">
+				                    	<option value="${DanggeunTypeDTO.id}" ${danggeunDTO.type_id == DanggeunTypeDTO.id || danggeunDTO.type_id eq null ? "selected" : ""}>${DanggeunTypeDTO.name}</option>
+				                    </c:forEach>
 				            </select>
                             <select class="form-select" name="addressRegion" id="addressRegion1"></select>
                             <select class="form-select" name="addressDo" id="addressDo1"></select>
@@ -116,16 +84,15 @@
 
                     </div>
                     <div class="cont">
-                        <textarea name="content" placeholder="내용 입력">
-                        	${danggeunDTO.content }
-                        </textarea>
+                        <textarea name="content" placeholder="내용 입력">${danggeunDTO.content}</textarea>
                     </div>
-            </section>
-            <div class="bt_wrap">
-                <button type="button" id="writeBtn" class="on">등록</button>
-                <button type="button" id="listBtn">목록</button>
-            </div>
-        </form>
+            	</section>
+            	<div class="bt_wrap">
+                	<button type="submit" id="writeBtn" class="on">등록</button>
+                	<a href="<c:url value='/danggeun/list?type_id=${type_id}' />">목록</a>
+            	</div>
+        	</form>
+    	</div>
     </div>
     <!--가격 입력시 숫자만 입력/자동으로 ,-->
     <script>
@@ -298,6 +265,7 @@
         }
 
     </script>
+
 
 
 </body>

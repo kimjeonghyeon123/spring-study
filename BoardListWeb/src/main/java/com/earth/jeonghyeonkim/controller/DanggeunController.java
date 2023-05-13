@@ -61,23 +61,48 @@ public class DanggeunController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(type_id);
 		return "danggeun";
 	}
 	
 	@GetMapping("/view")
 	public String danggeunView(Integer id, Integer type_id, Model m, HttpServletRequest request) {
 		try {
-			DanggeunDTO danggeunDTO = danggeunService.readDanggeun(id);
+			DanggeunDTO danggeunDTO = danggeunService.readDanggeun(id, (String) request.getSession().getAttribute("email"));
 			m.addAttribute("danggeunDTO", danggeunDTO);
 			m.addAttribute("type_id", type_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(type_id);
 		return "danggeunView";
 	}
 	
+	@GetMapping("/write")
+	public String danggeunWrite(Integer id, Model m, HttpServletRequest request) {
+		List<DanggeunTypeDTO> typeList = null;
+		
+		try {
+			typeList = danggeunTypeService.getTypeList();
+			m.addAttribute("typeList", typeList);
+			if(id != null) {
+				DanggeunDTO danggeunDTO = danggeunService.loadDanggeun(id);
+				m.addAttribute("danggeunDTO", danggeunDTO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "danggeunwrite";
+	}
+	
+	@PostMapping("/write")
+	public String registerDanggeun(DanggeunDTO danggeunDTO) {
+		try {
+			danggeunService.registerDanggeun(danggeunDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/danggeun/list";
+	}
 	
 	@PostMapping(value = "/togglezzim", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	@ResponseBody

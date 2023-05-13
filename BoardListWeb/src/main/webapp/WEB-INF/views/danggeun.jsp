@@ -62,7 +62,7 @@
             <button type="submit" class="btn-search">검색</button>
         </form>
         
-            <button type="button" class="btn-write"><a href="<c:url value='/danggeun/write?type_id=${type_id}' />">글쓰기</a></button>
+            <button type="button" class="btn-write"><a href="<c:url value='/danggeun/write' />">글쓰기</a></button>
 
         </div>
     </section>
@@ -248,10 +248,10 @@
 	                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 	                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="chat.html">구매하기</a>
 									<c:if test="${danggeundto.isStoreByCurrentMember == true}">
-										<button type="button" class="btnscrap storeBtn" data-id="${danggeundto.id}" data-email="${danggeundto.writer_email}" style="background-color: red;">찜♥</button>
+										<button type="button" class="btnscrap storeBtn" data-id="${danggeundto.id}" data-writeremail="${danggeundto.writer_email}" data-loginemail="${loginEmail}" style="background-color: red;">찜♥</button>
 									</c:if>
 									<c:if test="${danggeundto.isStoreByCurrentMember == false}">
-										<button type="button" class="btnscrap storeBtn" data-id="${danggeundto.id}" data-email="${danggeundto.writer_email}">찜♥</button>
+										<button type="button" class="btnscrap storeBtn" data-id="${danggeundto.id}" data-writeremail="${danggeundto.writer_email}" data-loginemail="${loginEmail}">찜♥</button>
 									</c:if>
 	                            </div>
 	                        </div>
@@ -266,14 +266,20 @@
     $(document).ready(function(){
         $(".storeBtn").on('click', function() {
             var button = $(this); // 버튼 객체를 저장
-            var id = $(this).data('id');
-            var email = $(this).data('email');
+            var id = $(this).data('id')
+            var loginemail = $(this).data('loginemail')
+            var writeremail = $(this).data('writeremail')
+            
+            if(loginemail == writeremail) {
+            	return alert("본인 상품을 찜할 수 없습니다.")
+            }
+            
             $.ajax({
                 type: 'POST',
                 url: '/jeonghyeonkim/danggeun/togglezzim',
                 data: {
                     'danggeun_id': id,
-                    'member_email': email
+                    'member_email': loginemail
                 },
                 success: function(response) {
 	            	if (response == "added") {

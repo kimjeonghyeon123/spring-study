@@ -14,7 +14,7 @@ public interface ZzimDanggeunDAO {
 	List<Integer> selectByMemberEmail(String member_email) throws Exception;
 	
 	//상품id로 상품을 찜한 멤버 리스트 가져오기
-	List<String> selectByMemberEmail(Integer danggeun_id) throws Exception;
+	List<String> selectByDanggeunId(Integer danggeun_id) throws Exception;
 	
 	//------------------------------------------------------
 	//삭제
