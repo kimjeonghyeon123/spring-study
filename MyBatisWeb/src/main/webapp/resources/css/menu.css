@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -19,8 +18,9 @@ ul {
 }
 
 ul > li {
-	height : 100%;
-	width: 90px;
+	color: lightgray;
+	height: 100%;
+	width: 90px; 
 	display: flex;
 	align-items: center;
 }
@@ -30,12 +30,12 @@ ul > li > a {
 	margin: auto;
 	padding: 10px;
 	font-size: 20px;
-	align-items: center;
+	align-items: center;	
 }
 
 ul > li > a:hover {
 	color: white;
-	border-bottom: 3px solid rgb(209,209,209);	
+	border-bottom: 3px solid rgb(209,209,209);
 }
 
 #logo {
@@ -45,3 +45,27 @@ ul > li > a:hover {
 	margin-right: auto;
 	display: flex;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

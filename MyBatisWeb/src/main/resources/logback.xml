@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 <configuration>
 	<include resource="org/springframework/boot/logging/logback/base.xml"/>
-    
+	    
 	    <!-- log4jdbc-log4j2 -->
 	    <logger name="jdbc.sqlonly" level="INFO"/>
 	    <logger name="jdbc.sqltiming" level="INFO"/>

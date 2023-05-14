@@ -21,9 +21,10 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.earth.heart" />
+	<context:component-scan base-package="com.earth.korea" />
 	
-	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="basenames">
 			<beans:list>
 				<beans:value>error_message</beans:value>
@@ -32,5 +33,9 @@
 		<beans:property name="defaultEncoding" value="UTF-8" />
 	</beans:bean>	
 	
-	<view-controller path="/" view-name="index" />
+	<view-controller path="/" view-name="index"/>	
 </beans:beans>
+
+
+
+

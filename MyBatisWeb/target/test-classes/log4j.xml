@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.earth.heart">
+	<logger name="com.earth.korea">
 		<level value="info" />
 	</logger>
 	
