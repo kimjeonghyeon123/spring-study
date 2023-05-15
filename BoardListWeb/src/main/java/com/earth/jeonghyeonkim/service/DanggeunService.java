@@ -20,4 +20,9 @@ public interface DanggeunService {
 	
 	//상픔 등록하기
 	int registerDanggeun(DanggeunDTO danggeunDTO) throws Exception;
+	
+	//상품 삭제할 때 사용
+	//찜 테이블 가서 데이터도 삭제해야 됨
+	int remove(Integer id, String writer_email) throws Exception;
+	
 }

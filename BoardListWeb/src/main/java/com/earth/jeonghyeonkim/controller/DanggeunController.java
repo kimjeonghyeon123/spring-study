@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
 import com.earth.jeonghyeonkim.domain.DanggeunTypeDTO;
@@ -95,6 +96,7 @@ public class DanggeunController {
 	
 	@PostMapping("/write")
 	public String registerDanggeun(DanggeunDTO danggeunDTO) {
+		
 		try {
 			danggeunService.registerDanggeun(danggeunDTO);
 		} catch (Exception e) {
@@ -121,6 +123,21 @@ public class DanggeunController {
 	    }
 	}
 	
+	@GetMapping("/remove")
+	public String remove(Integer id, String writer_email, Integer type_id, RedirectAttributes rattr, Model m) {
+		try {
+			if(danggeunService.remove(id, writer_email)!=1) {
+				throw new Exception("Delete failed");
+			}
+			rattr.addAttribute("msg", "DEL_OK");
+			return "redirect:/danggeun/list?type_id=" + type_id;
+		} catch (Exception e) {
+			e.printStackTrace();
+			m.addAttribute("type_id", type_id);
+			return "danggeun";
+		}
+		
+	}
 	
 	private boolean loginCheck(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);

@@ -9,8 +9,8 @@ public class DanggeunDTO {
 	private String title;
 	private String name;
 	private Integer type_id;
-	private Integer local_id;
-	private String local_name;		//추가
+	private Integer local_id = 1;
+	private String local_name;	//추가
 	private int price;
 	private String content;
 	private String writer_email;
@@ -22,16 +22,6 @@ public class DanggeunDTO {
 	private boolean isStoreByCurrentMember = false; // 추가
 	
 	public DanggeunDTO() {}
-	
-	public DanggeunDTO(String title, String name, Integer type_id, Integer local_id, int price, String content, String writer_email) {
-		this.title = title;
-		this.name = name;
-		this.type_id = type_id;
-		this.local_id = local_id;
-		this.price = price;
-		this.content = content;
-		this.writer_email = writer_email;
-	}
 
 	public Integer getId() {
 		return id;

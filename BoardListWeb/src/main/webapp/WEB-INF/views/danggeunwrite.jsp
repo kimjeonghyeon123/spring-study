@@ -59,10 +59,13 @@
                 <section class="dangguen-sec">
                     <div class="info">
                     	<dl>
-                    		<dd><input type="text" name="name" value="${loginEmail}" hidden></dd>
+                    		<dd><input type="text" name="writer_email" value="${loginEmail}" hidden></dd>
+                    	</dl>
+                    	<dl>
+                    		<dd><input type="text" name="name" value="${danggeunDTO.price}"></dd>
                     	</dl>
                         <dl>
-                            <dd> <input type="text" id="price" name="price" value="${danggeunDTO.price}" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
+                            <dd> <input type="number" id="price" name="price" value="${danggeunDTO.price}" placeholder="판매 가격" onkeyup="inputNumberFormat(this)" />
                                 원</dd>
                         </dl>
                         <div id="dangguen-img">

@@ -47,6 +47,14 @@
 		INSERT INTO danggeun(title, name, type_id, local_id, price, content, writer_email)
 		VALUES(#{title}, #{name}, #{type_id}, #{local_id}, #{price}, #{content}, #{writer_email})
 	</insert>
+	
+	<!-- 상품 삭제할 때 사용 -->
+	<!-- 찜 테이블 가서 데이터도 삭제해야 됨 -->
+	<delete id="delete" parameterType="map">
+		DELETE FROM danggeun
+		WHERE id = #{id} AND writer_email = #{writer_email}
+	</delete>
+	
 </mapper>
 
 

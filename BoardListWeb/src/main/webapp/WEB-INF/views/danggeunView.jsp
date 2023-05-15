@@ -119,6 +119,7 @@
 
             <div class="bt_wrap">
             	<c:if test="${danggeunDTO.writer_email eq loginEmail}">
+                    <button type="button" id="removeBtn">삭제</button>
                     <button type="button" id="modifyBtn">수정</button>
                 </c:if>
                 <c:if test="${danggeunDTO.writer_email ne loginEmail}">
@@ -164,6 +165,11 @@
         
         $("#modifyBtn").on('click', function(){
         	location.href = "<c:url value='/danggeun/write?id=${danggeunDTO.id}' />"
+        })
+        
+        $("#removeBtn").on('click', function(){
+        	if (!confirm("정말로 삭제하시겠습니까?")) return;
+        	location.href = "<c:url value='/danggeun/remove?id=${danggeunDTO.id}&writer_email=${loginEmail}&type_id=${type_id}' />"
         })
     });
 </script>

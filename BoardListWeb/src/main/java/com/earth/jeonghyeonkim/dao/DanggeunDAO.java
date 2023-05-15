@@ -22,5 +22,9 @@ public interface DanggeunDAO {
 	
 	//상품 추가할 때 사용
 	int insert(DanggeunDTO danggeunDTO) throws Exception;
+
+	//상품 삭제할 때 사용
+	//찜 테이블 가서 데이터도 삭제해야 됨
+	int delete(Integer id, String writer_email) throws Exception;
 	
 }

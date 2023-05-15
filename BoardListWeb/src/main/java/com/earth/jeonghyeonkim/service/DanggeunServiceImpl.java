@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.earth.jeonghyeonkim.dao.DangMemberDAO;
 import com.earth.jeonghyeonkim.dao.DanggeunDAO;
@@ -63,6 +64,14 @@ public class DanggeunServiceImpl implements DanggeunService {
 	@Override
 	public int registerDanggeun(DanggeunDTO danggeunDTO) throws Exception {
 		return danggeunDAO.insert(danggeunDTO);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int remove(Integer id, String writer_email) throws Exception {
+		int rowCnt = danggeunDAO.delete(id, writer_email);
+		zzimDanggeunDAO.deleteAllByDanggeunId(id);
+		return rowCnt;
 	}
 	
 	
