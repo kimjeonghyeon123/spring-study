@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
+import com.earth.jeonghyeonkim.domain.SearchItem;
 
 @Repository
 public class DanggeunDAOImpl implements DanggeunDAO {
@@ -18,12 +19,12 @@ public class DanggeunDAOImpl implements DanggeunDAO {
 	private static String namespace = "com.earth.jeonghyeonkim.dao.DanggeunMapper.";
 
 	@Override
-	public List<DanggeunDTO> selectAll() throws Exception {
-		return session.selectList(namespace + "selectAll");
+	public int selectByOptionCnt(SearchItem sc) throws Exception {
+		return session.selectOne(namespace + "selectByOptionCnt", sc);
 	}
 	@Override
-	public List<DanggeunDTO> selectByOption(Integer type_id) throws Exception {
-		return session.selectList(namespace + "selectByOption", type_id);
+	public List<DanggeunDTO> selectByOption(SearchItem sc) throws Exception {
+		return session.selectList(namespace + "selectByOption", sc);
 	}
 	@Override
 	public DanggeunDTO select(Integer id) throws Exception {

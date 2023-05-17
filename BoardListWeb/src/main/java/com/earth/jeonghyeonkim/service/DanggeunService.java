@@ -3,13 +3,17 @@ package com.earth.jeonghyeonkim.service;
 import java.util.List;
 
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
+import com.earth.jeonghyeonkim.domain.SearchItem;
 import com.earth.jeonghyeonkim.domain.ZzimDanggeunDTO;
 
 public interface DanggeunService {
 	
-	//검색 옵션을 이용해서 상품 목록 조회할 때 사용
+	//옵션을 이용해 불러온 상품 개수
+	int countDanggeunListByOption(SearchItem sc) throws Exception;
+	
+	//옵션을 이용해 상품 리스트를 불러올 때 사용 
 	//로그인한 멤버의 찜 여부까지 파악해서 상품목록 반환함
-	List<DanggeunDTO> readDanggeunListByOption(Integer type_id, String login_email) throws Exception;
+	List<DanggeunDTO> readDanggeunListByOption(SearchItem sc, String login_email) throws Exception;
 	
 	//게시물 하나를 읽을 때 사용
 	//게시물의 조회수가 올라감

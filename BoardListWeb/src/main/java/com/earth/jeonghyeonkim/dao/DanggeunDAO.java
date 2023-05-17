@@ -3,13 +3,15 @@ package com.earth.jeonghyeonkim.dao;
 import java.util.List;
 
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
+import com.earth.jeonghyeonkim.domain.SearchItem;
 
 public interface DanggeunDAO {
 	
-	List<DanggeunDTO> selectAll() throws Exception;
-	
-	//검색 옵션을 이용해서 상품 목록 조회할 때 사용 
-	List<DanggeunDTO> selectByOption(Integer type_id) throws Exception;
+	//옵션을 이용해 불러온 상품 개수
+	int selectByOptionCnt(SearchItem sc) throws Exception;
+
+	//옵션을 이용해 상품 리스트를 불러올 때 사용 
+	List<DanggeunDTO> selectByOption(SearchItem sc) throws Exception;
 	
 	//게시물 하나를 읽을 때 사용
 	DanggeunDTO select(Integer id) throws Exception;

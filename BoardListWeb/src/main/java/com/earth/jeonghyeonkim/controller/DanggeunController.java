@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
 import com.earth.jeonghyeonkim.domain.DanggeunTypeDTO;
+import com.earth.jeonghyeonkim.domain.PageResolver;
+import com.earth.jeonghyeonkim.domain.SearchItem;
 import com.earth.jeonghyeonkim.domain.ZzimDanggeunDTO;
 import com.earth.jeonghyeonkim.service.DanggeunService;
 import com.earth.jeonghyeonkim.service.DanggeunTypeService;
@@ -40,23 +42,20 @@ public class DanggeunController {
 	}
 
 	@GetMapping("/list")
-	public String danggeunList(Integer type_id, Model m, HttpServletRequest request) {
+	public String danggeunList(SearchItem sc, Model m, HttpServletRequest request) {
 		if(!loginCheck(request)) {
 			return "redirect:/login/login?toURL=" + request.getRequestURL();
 		}
-		
-		if(type_id == null) {
-			type_id = 0;
-		}
-		
-		List<DanggeunDTO> list = null;
-		List<DanggeunTypeDTO> typeList = null;
-		
+	
 		String login_email = (String) request.getSession().getAttribute("email");
 		try {
-			list = danggeunService.readDanggeunListByOption(type_id, login_email);
-			typeList = danggeunTypeService.getTypeList();
-			m.addAttribute("type_id", type_id);
+			int totalCnt = danggeunService.countDanggeunListByOption(sc);
+			PageResolver pageResolver = new PageResolver(totalCnt, sc);
+			List<DanggeunDTO> list = danggeunService.readDanggeunListByOption(sc, login_email);
+			List<DanggeunTypeDTO> typeList = danggeunTypeService.getTypeList();
+			
+			m.addAttribute("totalCnt", totalCnt);
+			m.addAttribute("pr", pageResolver);
 			m.addAttribute("list", list);
 			m.addAttribute("typeList", typeList);
 		} catch (Exception e) {
@@ -66,37 +65,31 @@ public class DanggeunController {
 	}
 	
 	@GetMapping("/view")
-	public String danggeunView(Integer id, Integer type_id, Model m, HttpServletRequest request) {
+	public String danggeunView(Integer id, SearchItem sc, Model m, HttpServletRequest request) {
 		try {
 			DanggeunDTO danggeunDTO = danggeunService.readDanggeun(id, (String) request.getSession().getAttribute("email"));
 			m.addAttribute("danggeunDTO", danggeunDTO);
-			m.addAttribute("type_id", type_id);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "redirect:/danggeun/list";
 		}
 		return "danggeunView";
 	}
 	
 	@GetMapping("/write")
-	public String danggeunWrite(Integer id, Model m, HttpServletRequest request) {
-		List<DanggeunTypeDTO> typeList = null;
-		
+	public String danggeunWrite(Model m) {
 		try {
-			typeList = danggeunTypeService.getTypeList();
+			List<DanggeunTypeDTO> typeList = danggeunTypeService.getTypeList();
 			m.addAttribute("typeList", typeList);
-			if(id != null) {
-				DanggeunDTO danggeunDTO = danggeunService.loadDanggeun(id);
-				m.addAttribute("danggeunDTO", danggeunDTO);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return "danggeunwrite";
 	}
 	
 	@PostMapping("/write")
 	public String registerDanggeun(DanggeunDTO danggeunDTO) {
-		
 		try {
 			danggeunService.registerDanggeun(danggeunDTO);
 		} catch (Exception e) {
@@ -104,6 +97,19 @@ public class DanggeunController {
 		}
 		
 		return "redirect:/danggeun/list";
+	}
+	
+	@GetMapping("/modify")
+	public String modify(Integer id, SearchItem sc, Model m) {
+		try {
+			List<DanggeunTypeDTO> typeList = danggeunTypeService.getTypeList();
+			m.addAttribute("typeList", typeList);
+			m.addAttribute("sc", sc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "danggeunwrite";
 	}
 	
 	@PostMapping(value = "/togglezzim", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

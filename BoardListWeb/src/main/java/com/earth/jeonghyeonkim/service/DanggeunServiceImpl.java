@@ -12,6 +12,7 @@ import com.earth.jeonghyeonkim.dao.DangMemberDAO;
 import com.earth.jeonghyeonkim.dao.DanggeunDAO;
 import com.earth.jeonghyeonkim.dao.ZzimDanggeunDAO;
 import com.earth.jeonghyeonkim.domain.DanggeunDTO;
+import com.earth.jeonghyeonkim.domain.SearchItem;
 import com.earth.jeonghyeonkim.domain.ZzimDanggeunDTO;
 
 @Service
@@ -25,20 +26,19 @@ public class DanggeunServiceImpl implements DanggeunService {
 	private DangMemberDAO dangMemberDAO;
 	
 	@Override
-	public List<DanggeunDTO> readDanggeunListByOption(Integer type_id, String login_email) throws Exception {
+	public int countDanggeunListByOption(SearchItem sc) throws Exception {
+		return danggeunDAO.selectByOptionCnt(sc);
+	}
+	
+	@Override
+	public List<DanggeunDTO> readDanggeunListByOption(SearchItem sc, String login_email) throws Exception {
 
 	    Set<Integer> zzimIdSet = new HashSet<>(zzimDanggeunDAO.selectByMemberEmail(login_email));
 	    List<DanggeunDTO> danggeunList = null;
-
-	    if(type_id == 0) {
-	        danggeunList = danggeunDAO.selectAll();
-	    }
-	    else {
-	        danggeunList = danggeunDAO.selectByOption(type_id);
-	    }
-
+	    
+	    danggeunList = danggeunDAO.selectByOption(sc);
+	    
 	    for(DanggeunDTO danggeun : danggeunList) {
-	    	danggeun.setWriter_name(dangMemberDAO.selectMemberName(danggeun.getWriter_email()));
 	        if(zzimIdSet.contains(danggeun.getId())) {
 	            danggeun.setIsStoreByCurrentMember(true);
 	        }
@@ -50,7 +50,6 @@ public class DanggeunServiceImpl implements DanggeunService {
 	@Override
 	public DanggeunDTO readDanggeun(Integer id, String login_email) throws Exception {
 		DanggeunDTO danggeunDTO = (DanggeunDTO) danggeunDAO.select(id);
-		danggeunDTO.setWriter_name(dangMemberDAO.selectMemberName(danggeunDTO.getWriter_email()));
 		danggeunDTO.setIsStoreByCurrentMember(zzimDanggeunDAO.selectcount(new ZzimDanggeunDTO(login_email, id)) == 1);
 		danggeunDAO.increaseViewCnt(id);
 		return danggeunDTO;
@@ -73,6 +72,5 @@ public class DanggeunServiceImpl implements DanggeunService {
 		zzimDanggeunDAO.deleteAllByDanggeunId(id);
 		return rowCnt;
 	}
-	
 	
 }

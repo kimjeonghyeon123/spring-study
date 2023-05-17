@@ -9,12 +9,11 @@ public class DanggeunDTO {
 	private String title;
 	private String name;
 	private Integer type_id;
-	private Integer local_id = 1;
-	private String local_name;	//추가
+	private String type_name;
 	private int price;
 	private String content;
 	private String writer_email;
-	private String writer_name;		//추가
+	private String writer_name;
 	private int view_cnt;
 	private int zzim_cnt;
 	private Date reg_date;
@@ -55,20 +54,12 @@ public class DanggeunDTO {
 		this.type_id = type_id;
 	}
 
-	public Integer getLocal_id() {
-		return local_id;
+	public String getType_name() {
+		return type_name;
 	}
 
-	public void setLocal_id(Integer local_id) {
-		this.local_id = local_id;
-	}
-
-	public String getLocal_name() {
-		return local_name;
-	}
-
-	public void setLocal_name(String local_name) {
-		this.local_name = local_name;
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
 	}
 
 	public int getPrice() {
@@ -142,38 +133,7 @@ public class DanggeunDTO {
 	public void setIsStoreByCurrentMember(boolean isStoreByCurrentMember) {
 		this.isStoreByCurrentMember = isStoreByCurrentMember;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(zzim_cnt, content, id, isStoreByCurrentMember, local_id, local_name, name, price, reg_date,
-				title, type_id, up_date, view_cnt, writer_email, writer_name);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DanggeunDTO other = (DanggeunDTO) obj;
-		return zzim_cnt == other.zzim_cnt && Objects.equals(content, other.content) && Objects.equals(id, other.id)
-				&& isStoreByCurrentMember == other.isStoreByCurrentMember && Objects.equals(local_id, other.local_id)
-				&& Objects.equals(local_name, other.local_name) && Objects.equals(name, other.name)
-				&& price == other.price && Objects.equals(reg_date, other.reg_date)
-				&& Objects.equals(title, other.title) && Objects.equals(type_id, other.type_id)
-				&& Objects.equals(up_date, other.up_date) && view_cnt == other.view_cnt
-				&& Objects.equals(writer_email, other.writer_email) && Objects.equals(writer_name, other.writer_name);
-	}
-
-	@Override
-	public String toString() {
-		return "DanggeunDTO [id=" + id + ", title=" + title + ", name=" + name + ", type_id=" + type_id + ", local_id="
-				+ local_id + ", local_name=" + local_name + ", price=" + price + ", content=" + content
-				+ ", writer_email=" + writer_email + ", writer_name=" + writer_name + ", view_cnt=" + view_cnt
-				+ ", zzim_cnt=" + zzim_cnt + ", reg_date=" + reg_date + ", up_date=" + up_date
-				+ ", isStoreByCurrentMember=" + isStoreByCurrentMember + "]";
-	}
+	
+	
 	
 }

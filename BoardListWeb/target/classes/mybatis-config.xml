@@ -9,5 +9,6 @@
 		<typeAlias type="com.earth.jeonghyeonkim.domain.DanggeunDTO" alias="DanggeunDto" />
 		<typeAlias type="com.earth.jeonghyeonkim.domain.DanggeunTypeDTO" alias="DanggeunTypeDto" />
 		<typeAlias type="com.earth.jeonghyeonkim.domain.ZzimDanggeunDTO" alias="ZzimDanggeunDto" />
+		<typeAlias type="com.earth.jeonghyeonkim.domain.SearchItem" alias="SearchItem" />
 	</typeAliases>
 </configuration>
