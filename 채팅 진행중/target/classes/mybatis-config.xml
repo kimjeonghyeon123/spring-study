@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.earth.korea.domain.BoardDTO" alias="BoardDto"/>
+		<typeAlias type="com.earth.korea.domain.SearchItem" alias="SearchItem"/>
+		<typeAlias type="com.earth.korea.domain.CommentDTO" alias="CommentDto"/>
+		<typeAlias type="com.earth.korea.domain.ChatDTO" alias="ChatDto"/>
+		<typeAlias type="com.earth.korea.domain.UserChatRoomDTO" alias="UserChatRoomDto"/>
+		<typeAlias type="com.earth.korea.domain.ChatRoomDTO" alias="ChatRoomDto"/>
+		<typeAlias type="com.earth.korea.domain.ChatLogDTO" alias="ChatLogDto"/>
+	</typeAliases>
+</configuration>  

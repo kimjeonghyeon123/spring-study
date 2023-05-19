@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.earth.korea.dao.userChatRoomMapper">
+	
+	<!-- 로그인한 유저의 채팅 방번호랑 상대 얻기 -->
+	<select id="select" parameterType="string" resultType="map">
+		SELECT chatroom_id, user_id
+		FROM t_userchatroom
+		WHERE chatroom_id IN (
+				SELECT chatroom_id
+				FROM t_userchatroom
+				WHERE user_id = #{user_id}
+			) 
+			AND user_id != #{user_id}
+	</select>
+	
+	<!-- 채팅방 생성할 경우 -->
+	<insert id="insert" parameterType="UserChatRoomDto">
+		INSERT INTO t_userchatroom(user_id, chatroom_id)
+		VALUES(#{user_id}, #{chatroom_id})
+	</insert>
+	
+	<!-- 회원 탈퇴하거나 채팅방을 전부 삭제할 때 사용 -->
+	<delete id="deleteAll" parameterType="string">
+		DELETE FROM t_userchatroom 
+		WHERE chatroom_id in (
+			SELECT chatroom_id
+			FROM t_userchatroom
+			WHERE user_id = #{user_id}
+		)
+	</delete>
+	
+	<!-- 방을 삭제했을 때 사용 -->
+	
+</mapper>
