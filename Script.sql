@@ -167,7 +167,31 @@ FROM t_comment;
 
 
 
+drop table if exists t_userchatrooom;
+create table t_userchatrooom(
+	id serial primary key,
+	user_email varchar(50) not null,
+	chatroom_id integer not null
+);
 
+drop table if exists t_chatroom;
+create table t_chatroom(
+	id serial primary key,
+	recent_id varchar(50) not null,
+	recent_chatting text not null,
+	recent_date date default current_timestamp,
+	unread_cnt int default 1
+);
+
+drop table if exists t_chatting;
+create table t_chatting(
+	id serial primary key,
+	sender_id varchar(50) not null,
+	chatroom_id integer not null,
+	chat text not null,
+	chat_date date default current_timestamp,
+	check_read boolean default false
+);
 
 
 
