@@ -167,18 +167,19 @@ FROM t_comment;
 
 
 
-drop table if exists t_userchatrooom;
-create table t_userchatrooom(
-	id serial primary key,
-	user_email varchar(50) not null,
-	chatroom_id integer not null
+drop table if exists t_userchatroom;
+create table t_userchatroom(
+	chatroom_id integer not null,
+	login_id varchar(50) not null,
+	other_id varchar(50) not null,
+	primary key(chatroom_id, login_id)
 );
 
 drop table if exists t_chatroom;
 create table t_chatroom(
 	id serial primary key,
 	recent_id varchar(50) not null,
-	recent_chatting text not null,
+	recent_chat text not null,
 	recent_date date default current_timestamp,
 	unread_cnt int default 1
 );
@@ -192,6 +193,14 @@ create table t_chatting(
 	chat_date date default current_timestamp,
 	check_read boolean default false
 );
+
+select * from t_chatroom;
+select * from t_userchatroom;
+select * from t_chatting;
+
+truncate t_chatroom restart identity;
+truncate t_userchatroom restart identity; 
+truncate t_chatting restart identity;
 
 
 
