@@ -195,7 +195,7 @@
 						console.debug("reply.js::socket>>", socket)
 						if(socket) {
 							//websocket에 보내기!!
-							let socketMsg = "reply," + loginId + "," + writerId + "," + bno
+							let socketMsg = "reply," + loginId + "," + writerId + "," + bno + "," + comment
 							console.debug("sssssssmsg>>", socketMsg)
 							socket.send(socketMsg)
 						}
@@ -330,9 +330,25 @@
 			
 			ws.onmessage = function(event) {
 				console.log("ReceiveMessage:", event.data+'\n')
-				let socketAlert = $('div#socketAlert')
-				socketAlert.text(event.data)
-				socketAlert.css('display', 'block')
+				
+			    let message = JSON.parse(event.data)
+			    let cmd = message.cmd
+			    
+			    if (cmd === "reply") {
+			        let replyWriter = message.replyWriter
+			        let bno = message.bno
+			        let comment = message.comment
+			        
+					let socketAlert = $('div#socketAlert')
+					socketAlert.text(replyWriter + '님이 ' + bno + '번 게시글에 ' + comment +'라고 달았습니다.')
+					socketAlert.css('display', 'block')
+					
+			    } else if (cmd === "chat") {
+			        // "chat" 메시지 처리
+			        let senderId = message.senderId
+			        let comment = message.comment
+			        // 적절한 동작 수행
+			    }
 			}
 			
 			ws.onclose = function (event){ 
