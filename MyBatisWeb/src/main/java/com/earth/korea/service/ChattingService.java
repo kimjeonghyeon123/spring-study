@@ -16,7 +16,7 @@ public interface ChattingService {
 	//채팅 새 페이지에서 채팅 보내기를 누르면 생성됨
 	int makeChattingRoom(String login_id, String other_id, String message) throws Exception;
 	
-	//채팅 목록 불러오기
+	//채팅방 목록 불러오기
 	List<ChatRoomDTO> showChatRoomList(String login_id) throws Exception;
 	
 	//채팅 목록 불러오기

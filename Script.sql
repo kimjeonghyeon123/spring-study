@@ -23,22 +23,17 @@ create table danggeun_type(
 	name varchar(50) not null
 );
 
-drop table if exists location;
-create table location(
-	id int primary key,
-	name varchar(50) not null
-);
-
 drop table if exists danggeun;
 create table danggeun(
 	id 			serial 		primary key,-- 상품아이디
 	title		varchar(50) not null,	-- 상품게시물제목
 	name 		varchar(50) not null,	-- 상품이름
 	type_id		Integer		not null,	-- 상품타입
-	local_id	Integer		not null,	-- 판매지역
+	type_name	varchar(50)	not null,	-- 상품타입이름
 	price		int			not null,	-- 상품가격
 	content 	text 		not null,	-- 상품설명
-	writer_email varchar(50) not null,	-- 판매자
+	writer_email varchar(50) not null,	-- 판매자 이메일
+	writer_name varchar(50) not null,   -- 판매자 이름
 	view_cnt 	int 		default 0,	-- 조회수
 	zzim_cnt	int			default 0,	-- 찜 수
 	reg_date 	date 		default current_timestamp,
@@ -52,11 +47,6 @@ create table zzim_danggeun(
 	primary key(member_email, danggeun_id)
 );
 
-select id, title, name, zzim_cnt
-from danggeun
-order by reg_date desc, id desc;
-
-
 select *
 from dang_member;
 
@@ -69,16 +59,17 @@ from location;
 select *
 from danggeun_type;
 
-
+select *
+from danggeun;
 insert into dang_member 
 values('gojhkim123@naver.com', '12345', 'kim');
 insert into dang_member 
 values('earth@naver.com', '12345', 'earth');
 
-INSERT INTO public.danggeun
-(title, "name", type_id, local_id, price, "content", writer_email)
-VALUES('123', '123', 3, 1, 2333, '123213', 'earth@naver.com');
-
+INSERT INTO danggeun(title, name, type_id, type_name, price, content, writer_email, writer_name)
+VALUES('개껌팔아요', '개껌', 1, '사료/간식', 3000, '개껌 3000원에 팝니다', 'gojhkim123@naver.com', 'kim');
+INSERT INTO danggeun(title, name, type_id, type_name, price, content, writer_email, writer_name)
+VALUES('영양제 팔아요', '비타민', 2, '영양제', 5000, '영양제 5000원에 팝니다', 'earth@naver.com', 'earth');
 
 insert into danggeun_type values(0, '전체');
 insert into danggeun_type values(1, '사료/간식');
@@ -91,6 +82,8 @@ insert into danggeun_type values(7, '기타 용품');
 
 delete from zzim_danggeun;
 
+SELECT COUNT(*) FROM danggeun WHERE true AND (title LIKE concat('%', '', '%') OR content LIKE 
+concat('%', '', '%'));
 ----------------------------------------------------------------------
 
 
@@ -116,7 +109,9 @@ create table t_user (
 );
 
 insert into t_user(id, pwd, name, email, birth, sns)
-values('earth', '0629', 'earth', 'earth@naver.com', '2000-01-01', 'facebook')
+values('earth', '0629', 'earth', 'earth@naver.com', '2000-01-01', 'facebook');
+insert into t_user(id, pwd, name, email, birth, sns)
+values('earth2', '0629', 'earth', 'earth@naver.com', '2000-01-01', 'facebook');
 
 select *
 from t_user;
@@ -143,29 +138,8 @@ SELECT COUNT(*) FROM t_board WHERE true AND (title LIKE concat('%', '', '%') OR 
 concat('%', '', '%'));
 
 -----------
---t_comment--
+--t_chat--
 -----------
-drop table if exists t_comment;
-create table t_comment (
-	cno				serial primary key
-	,bno 			int 		not null
-	,pcno			int 
-	,comment		varchar(3000)
-	,commenter		varchar(30)
-	,reg_date		date	default now()
-	,up_date 		date 	default now()
-);
-
-SELECT cno, bno, pcno, comment, commenter, reg_date, up_date
-FROM t_comment;
-
-
-
-
-
-
-
-
 
 drop table if exists t_userchatroom;
 create table t_userchatroom(
@@ -180,7 +154,7 @@ create table t_chatroom(
 	id serial primary key,
 	recent_id varchar(50) not null,
 	recent_chat text not null,
-	recent_date date default current_timestamp,
+	recent_date timestamp default current_timestamp,
 	unread_cnt int default 1
 );
 
@@ -190,10 +164,11 @@ create table t_chatting(
 	sender_id varchar(50) not null,
 	chatroom_id integer not null,
 	chat text not null,
-	chat_date date default current_timestamp,
+	chat_date timestamp default current_timestamp,
 	check_read boolean default false
 );
 
+select * from t_user;
 select * from t_chatroom;
 select * from t_userchatroom;
 select * from t_chatting;
@@ -202,5 +177,32 @@ truncate t_chatroom restart identity;
 truncate t_userchatroom restart identity; 
 truncate t_chatting restart identity;
 
+insert into t_chatroom(recent_id, recent_chat) values('earth', '안녕 earth2');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth', 1, '안녕 earth2');
+insert into t_userchatroom values(1, 'earth', 'earth2');
+insert into t_userchatroom values(1, 'earth2', 'earth');
 
+insert into t_chatroom(recent_id, recent_chat) values('earth3', '안녕 earth');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth3', 2, '안녕 earth');
+insert into t_userchatroom values(2, 'earth3', 'earth');
+insert into t_userchatroom values(2, 'earth', 'earth3');
 
+insert into t_chatroom(recent_id, recent_chat) values('earth4', '안녕 earth');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth4', 3, '안녕 earth');
+insert into t_userchatroom values(3, 'earth4', 'earth');
+insert into t_userchatroom values(3, 'earth', 'earth4');
+
+insert into t_chatroom(recent_id, recent_chat) values('earth5', '안녕 earth');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth5', 4, '안녕 earth');
+insert into t_userchatroom values(4, 'earth5', 'earth');
+insert into t_userchatroom values(4, 'earth', 'earth5');
+
+insert into t_chatroom(recent_id, recent_chat) values('earth6', '안녕 earth');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth6', 5, '안녕 earth');
+insert into t_userchatroom values(5, 'earth6', 'earth');
+insert into t_userchatroom values(5, 'earth', 'earth6');
+
+insert into t_chatroom(recent_id, recent_chat) values('earth7', '안녕 earth');
+insert into t_chatting(sender_id, chatroom_id, chat) values('earth7', 6, '안녕 earth');
+insert into t_userchatroom values(6, 'earth7', 'earth');
+insert into t_userchatroom values(6, 'earth', 'earth7');

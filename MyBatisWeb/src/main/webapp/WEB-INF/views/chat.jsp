@@ -52,7 +52,7 @@
             display: none; /* Chrome, Safari, Opera에서 기본 스크롤바 감추기 */
         }
 
-        #chatting {
+        #chatting { 
             width: 50%;
             height: 100%;
             overflow-y: scroll;
@@ -69,6 +69,8 @@
         .chatroom {
             height: 100px; /* 적절한 높이 설정 */
             border-bottom: 1px solid #ccc; /* 채팅방 간 구분선 설정 */
+            display: flex;
+            justify-content: space-between;
         }
 
         .chatroom:last-child {
@@ -77,12 +79,11 @@
     </style>
 </head>
 <body>
-	<div id="socketAlert" class="alert alert-success" role="alert" style="display: none;"></div>
-
     <div id="menu">
     	<ul>
     		<li id="logo">earth</li>
     		<li><a href="<c:url value='/' />">Home</a></li>
+    		<li><a href="<c:url value='/chat' />">chat</a></li>
     		<li><a href="<c:url value='/board/list' />">Board</a></li>
     		<li><a href="<c:url value='${loginoutlink}' />">${loginout}</a></li>
     		<li><a href="<c:url value='/register/add' />">SignUp</a></li>
@@ -93,102 +94,85 @@
     <div id="body">
         <div id="chat">
             <div id="chatrooms">
-                <div class="chatroom">
-					<!-- 채팅방이 계속 로딩되야 함 -->
-					<!-- 마지막 메시지 시간 순서에 따라 배치해야 됨 -->
-					<!-- 상대가 메시지를 보내면 채팅방이 생성되야 됨 -->
-					<!-- 안읽은 메시지 개수를 띄워야 함 -->
-					<!-- 클릭하면 채팅방 메시지 내역을 바로 가져와야 됨 -->
-					<!-- 메시지가 읽음 상태로 변경 -->
-                </div>
-                <div class="chatroom">
-
-                </div>
-                <div class="chatroom">
-
-                </div>
-                <div class="chatroom">
-
-                </div>
-                <div class="chatroom">
-
-                </div>
-                <div class="chatroom">
-
-                </div>
-                <div class="chatroom" style="background-color: red">
-
-                </div>
             </div>
             <div id="chatting">
                 
             </div>
         </div>
-    </div>    
-    
-    
-   <script type="text/javascript">
-		var socket = null
-		$(document).ready(function() {
-			connectWS()
-			showList()
-		})	
-		
-		function connectWS() {
-			var ws = new WebSocket("ws://localhost/korea/replyEcho")
-			socket = ws
-			
-			ws.onopen = function() {
-				console.log('Info: connection opened.')
-			}
-			
-			ws.onmessage = function(event) {
-				console.log("ReceiveMessage:", event.data+'\n')
-				
-			    let message = JSON.parse(event.data)
-			    let cmd = message.cmd
-			    
-			    if (cmd === "reply") {
-			        let replyWriter = message.replyWriter
-			        let bno = message.bno
-			        let comment = message.comment
-			        
-					let socketAlert = $('div#socketAlert')
-					socketAlert.text(replyWriter + '님이 ' + bno + '번 게시글에 ' + comment +'라고 달았습니다.')
-					socketAlert.css('display', 'block')
-					
-			    } else if (cmd === "chat") {
-			    	showList()
-			    }
-			}
-			
-			ws.onclose = function (event){ 
-				console.log('Info: connection closed') 
-				//setTimeout(function(){connect()}, 1000)	
-			}
-			ws.onerror = function (err){ console.log('Error: ', err) }
-		}
+    </div>
+<script type="text/javascript">
+    let loginId = '${loginId}'
 
-		let showList = function() {
-	    	$.ajax({
-	    		type: 'GET',						//요청 메서드 
-	    		url: '/korea/chat',	//요청 URI
-				success: function(result) {
-					$("#chatting").html(toHtml(result))	//result는 서버가 전송한 데이터
-				},
-				error: function() { alert("error") }		//에러가 발생할때, 
-	    	})	
-		}
-		var loginId = loginId
-		let toHtml = function(chats) {
-			let tmp = ''
-			chats.forEach(function(chat) {
-				tmp += '<p>' + chat.sender_id + ':' + chat.content
-				tmp += '</p>'
-			})	
-			
-			return tmp
-		}
-    </script>    
+    $(document).ready(function(){
+        showList(loginId)
+    })
+
+    let showList = function(login_id) {
+        $.ajax({
+            type: 'get',
+            url: '/korea/chats?login_id='+login_id,
+            success: function(result) {
+                $('#chatrooms').html(toHtml(result))
+            },
+            error: function() {alert('error')}
+        })
+    }
+
+    let toHtml = function(chatrooms) {
+        let tmp = ''
+
+        chatrooms.forEach(function(chatroom){
+            tmp += '<div class="chatroom">'
+            tmp += '<div><p>' + chatroom.other_id + '</p><br><p>' + chatroom.recent_id + ': ' + chatroom.recent_chat + '</p></div>'
+            tmp += '<div><p>' + formatRegDate(chatroom.recent_date) + '</p><br><p>'
+            if(chatroom.recent_id !== loginId) {
+                tmp += chatroom.unread_cnt
+            }
+            tmp += '</p></div></div>'
+        })
+
+        return tmp
+    }
+
+    let formatRegDate = function(regDate) {
+        let currentDate = new Date(); // 현재 날짜와 시간
+        let inputDate = new Date(regDate); // 입력된 날짜와 시간을 JavaScript의 Date 객체로 변환
+
+        // 현재 날짜와 입력된 날짜의 차이를 계산합니다.
+        let timeDiff = currentDate.getTime() - inputDate.getTime();
+        let daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24)); // 일 단위로 변환
+
+        if (daysDiff > 0) {
+            // 전날인 경우 월일을 표시합니다.
+            let month = inputDate.getMonth() + 1; // getMonth()의 반환값은 0부터 시작하므로 1을 더해줍니다.
+            let day = inputDate.getDate();
+            return month + '월 ' + day + '일';
+        } else {
+            // 같은 날인 경우 시간을 표시합니다.
+            let hours = inputDate.getHours();
+            let minutes = inputDate.getMinutes();
+            let period = hours >= 12 ? '오후' : '오전';
+
+            // 12시간 단위로 변환
+            hours = hours % 12;
+            hours = hours === 0 ? 12 : hours; // 0시일 경우 12로 표시합니다.
+
+            // 분이 한 자리 수인 경우 앞에 0 추가
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            return period + ' ' + hours + ':' + minutes;
+        }
+    };
+</script>  
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

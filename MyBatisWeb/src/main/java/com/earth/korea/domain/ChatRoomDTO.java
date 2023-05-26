@@ -1,13 +1,13 @@
 package com.earth.korea.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class ChatRoomDTO {
 	
 	private Integer id; 
 	private String recent_id;
 	private String recent_chat;
-	private Date recent_date;
+	private Timestamp recent_date;
 	private int unread_cnt;
 	
 	private String other_id; //추가
@@ -43,11 +43,11 @@ public class ChatRoomDTO {
 		this.recent_chat = recent_chat;
 	}
 
-	public Date getRecent_date() {
+	public Timestamp getRecent_date() {
 		return recent_date;
 	}
 
-	public void setRecent_date(Date recent_date) {
+	public void setRecent_date(Timestamp recent_date) {
 		this.recent_date = recent_date;
 	}
 

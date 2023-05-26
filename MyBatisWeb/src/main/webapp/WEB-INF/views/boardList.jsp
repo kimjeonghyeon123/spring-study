@@ -14,13 +14,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     <link rel="stylesheet" href="<c:url value='/resources/css/menu.css' />" />
-    <!-- CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-	<!-- JavaScript -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>    
     <title>게시판 리스트</title>
     
@@ -147,13 +143,11 @@
     </style>
 </head>
 <body>
-
-    <div id="socketAlert" class="alert alert-success" role="alert" style="display: none;"></div>
-    
     <div id="menu">
     	<ul>
     		<li id="logo">earth</li>
     		<li><a href="<c:url value='/' />">Home</a></li>
+    		<li><a href="<c:url value='/chat' />">chat</a></li>
     		<li><a href="<c:url value='/board/list' />">Board</a></li>
     		<li><a href="<c:url value='${loginoutlink}' />">${loginout}</a></li>
     		<li><a href="<c:url value='/register/add' />">SignUp</a></li>
@@ -202,7 +196,7 @@
     					<td class="title">
     						<a href="<c:url value="/board/read${pr.sc.queryString}&bno=${boardDto.bno }" />">${boardDto.title }</a>
     					</td>
-    					<td class="writer"><button type="button" class="chatBtn" data-boardwriter="${boardDto.writer}">${boardDto.writer }</button><div class="chatmenu" style="display: none;"></div></td>
+    					<td class="writer">${boardDto.writer }</td>
     					<td class="regdate">
     						<fmt:formatDate value="${boardDto.reg_date }" pattern="yyyy-MM-dd" type="date"/>
     					</td>
@@ -232,57 +226,6 @@
     		</div>
     	</div>
     </div>
-   <script type="text/javascript">
-		var socket = null
-		$(document).ready(function() {
-			connectWS()
-			
-			$(".chatBtn").on('click', function(){
-				let chatmenu = $(this).next('.chatmenu')
-				receiverId = $(this).attr('data-boardwriter')
-				chatmenu.html('<a href="/korea/chatroom?receiverId=' + receiverId + '">채팅</a>')
-				chatmenu.show()
-			})
-			
-		})	
-		
-		function connectWS() {
-			var ws = new WebSocket("ws://localhost/korea/replyEcho")
-			socket = ws
-			
-			ws.onopen = function() {
-				console.log('Info: connection opened.')
-			}
-			
-			ws.onmessage = function(event) {
-				console.log("ReceiveMessage:", event.data+'\n')
-				
-			    let message = JSON.parse(event.data)
-			    let cmd = message.cmd
-			    
-			    if (cmd === "reply") {
-			        let replyWriter = message.replyWriter
-			        let bno = message.bno
-			        let comment = message.comment
-			        
-					let socketAlert = $('div#socketAlert')
-					socketAlert.text(replyWriter + '님이 ' + bno + '번 게시글에 ' + comment +'라고 달았습니다.')
-					socketAlert.css('display', 'block')
-					
-			    } else if (cmd === "chat") {
-			        let senderId = message.senderId
-			        let comment = message.comment
-			        // 적절한 동작 수행
-			    }
-			}
-			
-			ws.onclose = function (event){ 
-				console.log('Info: connection closed') 
-				//setTimeout(function(){connect()}, 1000)	
-			}
-			ws.onerror = function (err){ console.log('Error: ', err) }
-		}
-    </script>
 </body>
 </html>
 

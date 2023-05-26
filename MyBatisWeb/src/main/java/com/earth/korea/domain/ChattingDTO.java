@@ -1,13 +1,13 @@
 package com.earth.korea.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class ChattingDTO {
 	private Integer id;
 	private String sender_id;
 	private Integer chatroom_id;
 	private String chat;
-	private Date chat_date;
+	private Timestamp chat_date;
 	private boolean check_read;
 	
 	public ChattingDTO() {}
@@ -42,10 +42,10 @@ public class ChattingDTO {
 	public void setChat(String chat) {
 		this.chat = chat;
 	}
-	public Date getChat_date() {
+	public Timestamp getChat_date() {
 		return chat_date;
 	}
-	public void setChat_date(Date chat_date) {
+	public void setChat_date(Timestamp chat_date) {
 		this.chat_date = chat_date;
 	}
 	public boolean isCheck_read() {

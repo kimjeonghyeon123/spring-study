@@ -44,5 +44,6 @@
 	</websocket:handlers>
 	
 	<view-controller path="/" view-name="index"/>
+		
 	
 </beans:beans>

@@ -10,7 +10,8 @@
 		SELECT chatroom_id, other_id, recent_id, recent_chat, recent_date, unread_cnt
 		FROM t_userchatroom
 		JOIN t_chatroom ON chatroom_id = id
-		WHERE login_id = #{login_id};
+		WHERE login_id = #{login_id}
+		ORDER BY recent_date desc
 	</select>
 	
 	<!-- 채팅방 만들기 -->

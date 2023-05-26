@@ -2,53 +2,40 @@ package com.earth.korea.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.earth.korea.domain.ChatDTO;
-import com.earth.korea.service.ChatService;
+import com.earth.korea.domain.ChatRoomDTO;
+import com.earth.korea.service.ChattingService;
 
 @Controller
 public class ChatController {
 
-	@Autowired
-	ChatService service;
-	
-	@GetMapping("/chatroom")
-	public String chatroom() {
-		return "chat";
-	}
-	
-	@PostMapping("/chat")
-	public ResponseEntity<String> write(@RequestBody ChatDTO chatDTO) {
-		try {
-			if(service.insert(chatDTO) != 1)
-				throw new Exception("write Failed");
+	private ChattingService chattingService;
 
-			return new ResponseEntity<String>("WRT_OK", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("WRT_ERR", HttpStatus.BAD_REQUEST);
-		}
+	public ChatController(ChattingService chattingService) {
+		this.chattingService = chattingService;
 	}
 	
 	@GetMapping("/chat")
+	public String chat() {
+		return "chat";
+	}
+	
+	@GetMapping("/chats")
 	@ResponseBody
-	ResponseEntity<List<ChatDTO>> list() {
-		List<ChatDTO> list = null;
+	public ResponseEntity<List<ChatRoomDTO>> chat(String login_id) {
+		List<ChatRoomDTO> list = null;
 		
 		try {
-			list = service.loadChatting();
-			return new ResponseEntity<List<ChatDTO>>(list, HttpStatus.OK);
+			list = chattingService.showChatRoomList(login_id);
+			return new ResponseEntity<List<ChatRoomDTO>>(list, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<List<ChatDTO>>(list, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<List<ChatRoomDTO>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
