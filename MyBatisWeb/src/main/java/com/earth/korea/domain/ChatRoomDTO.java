@@ -19,6 +19,12 @@ public class ChatRoomDTO {
 		this.recent_chat = recent_chat;
 	}
 	
+	public ChatRoomDTO(Integer id, String recent_id, String recent_chat) {
+		this.id = id;
+		this.recent_id = recent_id;
+		this.recent_chat = recent_chat;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -30,9 +30,9 @@ public class ChattingDaoImpl implements ChattingDao {
 	}
 	
 	@Override
-	public int updateCheckReadToTrue(Integer id, String login_id) throws Exception {
+	public int updateCheckReadToTrue(Integer chatroom_id, String login_id) throws Exception {
 		Map map = new HashMap();
-		map.put("id", id);
+		map.put("chatroom_id", chatroom_id);
 		map.put("login_id", login_id);
 		return session.update(namespace + "updateCheckReadToTrue", map);
 	}

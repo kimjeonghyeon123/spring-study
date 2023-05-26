@@ -10,9 +10,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
-		<property name="url" value="jdbc:log4jdbc:postgresql://localhost:5432/Retail" />
+		<property name="url" value="jdbc:log4jdbc:postgresql://localhost:5432/postgres" />
 		<property name="username" value="postgres" />
-		<property name="password" value="0718" />
+		<property name="password" value="0629" />
 	</bean>
 	<aop:aspectj-autoproxy />
 	<context:component-scan base-package="com.earth.jeonghyeonkim" />
@@ -25,5 +25,5 @@
 	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>		
+	</bean>	
 </beans>

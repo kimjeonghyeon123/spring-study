@@ -13,6 +13,6 @@ public interface ChattingDao {
 	int insert(ChattingDTO chattingDTO) throws Exception;
 	
 	//채팅 읽음 상태로 변경하기
-	int updateCheckReadToTrue(Integer id, String login_id) throws Exception;
+	int updateCheckReadToTrue(Integer chatroom_id, String login_id) throws Exception;
 	
 }

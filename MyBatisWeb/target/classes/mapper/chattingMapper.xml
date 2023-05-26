@@ -6,7 +6,7 @@
 <mapper namespace="com.earth.korea.dao.ChattingMapper">
 	
 	<!-- 채팅목록 가져오기 -->
-	<select id="selectAll" parameterType="int">
+	<select id="selectAll" parameterType="int" resultType="ChattingDto">
 		SELECT id, sender_id, chatroom_id, chat, chat_date, check_read
 		FROM t_chatting
 		WHERE chatroom_id = #{chatroom_id}
@@ -23,7 +23,7 @@
 	<update id="updateCheckReadToTrue" parameterType="map">
 		UPDATE t_chatting
 		SET check_read = true
-		WHERE id = #{id} and sender_id != #{login_id} 
+		WHERE chatroom_id = #{chatroom_id} and sender_id != #{login_id} 
 	</update>
 	
 </mapper>

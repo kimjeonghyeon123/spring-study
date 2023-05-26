@@ -9,8 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-												 
+												 //미리 초기화(early init)
+//@WebServlet(urlPatterns = {"/hello", "/hello/*"}, loadOnStartup = 1}
 @WebFilter(urlPatterns = "/*") // 모든 요청에 필터를 적용
 public class PerformanceFilter implements Filter{
 	@Override

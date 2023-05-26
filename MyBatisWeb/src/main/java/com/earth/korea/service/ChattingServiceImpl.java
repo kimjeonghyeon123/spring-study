@@ -62,7 +62,7 @@ public class ChattingServiceImpl implements ChattingService {
 	@Override
 	public void sendChatting(Integer chatrrom_id, String login_id, String message) throws Exception {
 		chattingDao.insert(new ChattingDTO(login_id, chatrrom_id, message));
-		chatRoomDao.updateChatRoom(new ChatRoomDTO(login_id, message));
+		chatRoomDao.updateChatRoom(new ChatRoomDTO(chatrrom_id, login_id, message));
 	}
 	
 }

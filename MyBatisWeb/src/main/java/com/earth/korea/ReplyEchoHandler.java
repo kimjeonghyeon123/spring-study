@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -25,21 +26,49 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
 		System.out.println("handleTextMessage:" + session + " : " + message);
-
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
+		System.out.println("======================================");
 		//protocol: cmd, 댓글작성자, 게시글 작성자, bno (reply, user2, user1, bno)
 		String msg = message.getPayload();
 		String[] strs = msg.split(",");
-		if(strs != null && strs.length == 4) {
-			String cmd = strs[0]; // 응답 커
-			String replyWriter = strs[1]; // 댓글 쓴 사람이 지금 접속한 사람
-			String boardWriter = strs[2];
-			String bno = strs[3];
+		String cmd = strs[0];
+		
+		if(cmd.equals("sendchat")) {
+			String receiverId = strs[1];
+			Integer chatroomId = Integer.parseInt(strs[2]);
+			WebSocketSession receiverSession = userSessions.get(receiverId);
+			
+			if(receiverSession != null) {
+				JSONObject replyMessage = new JSONObject();
+				replyMessage.put("cmd", "sendchat");
+				replyMessage.put("chatroomId", chatroomId);
 				
-			WebSocketSession boardWriterSession = userSessions.get(boardWriter);
-			if(cmd.equals("reply") && boardWriterSession != null) {
-				TextMessage tmpMsg = new TextMessage(replyWriter + "님이 " + bno + "번 게시글에 댓글을 달았습니다.");
-				boardWriterSession.sendMessage(tmpMsg);
+				TextMessage tmpMsg = new TextMessage(replyMessage.toString());
+				receiverSession.sendMessage(tmpMsg);
+			}
+		}
+		
+		if(cmd.equals("readchat")) {
+			String receiverId = strs[1];
+			Integer chatroomId = Integer.parseInt(strs[2]);
+			
+			WebSocketSession receiverSession = userSessions.get(receiverId);
+			if(receiverSession != null) {
+				JSONObject replyMessage = new JSONObject();
+				replyMessage.put("cmd", "readchat");
+				replyMessage.put("chatroomId", chatroomId);
+				
+				TextMessage tmpMsg = new TextMessage(replyMessage.toString());
+				receiverSession.sendMessage(tmpMsg);
 			}
 		}
 	}
