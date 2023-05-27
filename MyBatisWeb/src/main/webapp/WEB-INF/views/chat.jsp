@@ -151,6 +151,7 @@
     				data : JSON.stringify({chatroomId: parseInt(chatroomId), loginId:loginId, chat: chat}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
     				success: function(result) {
     					showList()
+    					showChattingList(chatroomId)
     	                $('#chatInput').val('')
 		    			if(socket) {
 		                	let socketMsg = "sendchat," + otherId + "," + chatroomId
@@ -183,7 +184,7 @@
             tmp += '<div class="chatroom" data-chatroomId="' + chatroom.id + '" data-otherId="' + chatroom.other_id + '">'
             tmp += '<div><p>' + chatroom.other_id + '</p><br><p>' + chatroom.recent_id + ': ' + chatroom.recent_chat + '</p></div>'
             tmp += '<div><p>' + formatRegDate(chatroom.recent_date) + '</p><br><p>'
-            if(chatroom.recent_id !== loginId) {
+            if(chatroom.recent_id !== loginId && chatroom.unread_cnt !== 0) {
                 tmp += chatroom.unread_cnt
             }
             tmp += '</p></div></div>'
@@ -193,8 +194,6 @@
     }
     
     let showChattingList = function(chatroomId) {
-    	console.log(chatroomId)
-    	console.log(loginId)
     	$.ajax({
     		type: 'post',
     		url: '/korea/chattings',
@@ -272,7 +271,7 @@
     
 	// 소켓
 	function connectWS() {
-		var ws = new WebSocket("ws://localhost/korea/replyEcho")
+		var ws = new WebSocket("ws://localhost:8080/korea/replyEcho")
 		socket = ws
 		
 		ws.onopen = function() {
@@ -287,8 +286,10 @@
 		    
 		    if (cmd === "sendchat") {
 		    	console.log('message.chatroomId:', message.chatroomId)
+		    	console.log('type: ', typeof(message.chatroomId))
 		    	console.log('chatroomId:', chatroomId)
-		    	if(message.chatroomId === chatroomId) {
+		    	console.log('type: ', typeof(chatroomId))
+		    	if(String(message.chatroomId) === chatroomId) {
 		    		showList()
 		    		showChattingList(chatroomId)
 		    	}
@@ -298,8 +299,10 @@
 		    }
 		    else if (cmd === "readchat") {
 		    	console.log('message.chatroomId:', message.chatroomId)
+		    	console.log('type: ', typeof(message.chatroomId))
 		    	console.log('chatroomId:', chatroomId)
-		    	if(message.chatroomId === chatroomId) {
+		    	console.log('type: ', typeof(chatroomId))
+		    	if(String(message.chatroomId) === chatroomId) {
 		    		showList()
 		    		showChattingList(chatroomId)
 		    	}
