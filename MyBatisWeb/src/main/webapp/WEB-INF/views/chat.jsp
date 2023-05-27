@@ -138,6 +138,7 @@
         	unreadcnt = $(this).attr('data-unreadcnt')
         	
         	showChattingList(chatroomId)
+        	showList()
         	if(recentId === otherId && unreadcnt !== '0') {
 	            if(socket) {
 			    	let socketMsg = "readchat," + otherId + "," + chatroomId

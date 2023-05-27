@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.json.JSONObject;
 import org.springframework.web.socket.CloseStatus;
@@ -13,8 +15,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 public class ReplyEchoHandler extends TextWebSocketHandler {
 	
-	List<WebSocketSession> sessions = new ArrayList<>();
-	Map<String, WebSocketSession> userSessions = new HashMap<>();
+	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+	Map<String, WebSocketSession> userSessions = new ConcurrentHashMap<>();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
