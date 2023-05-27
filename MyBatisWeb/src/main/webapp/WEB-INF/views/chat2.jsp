@@ -125,8 +125,7 @@
     let chatroomId = null
     let otherId = null
     let socket = null
-    let recentId = null
-    let unreadcnt = null
+    
     $(document).ready(function(){
         connectWS()
         showList()
@@ -134,16 +133,11 @@
         $("#chatrooms").on('click', '.chatroom', function(){
         	chatroomId = $(this).attr('data-chatroomId')
         	otherId = $(this).attr('data-otherId')
-        	recentId = $(this).attr('data-recentId')
-        	unreadcnt = $(this).attr('data-unreadcnt')
-        	
         	showChattingList(chatroomId)
-        	if(recentId === otherId && unreadcnt !== '0') {
-	            if(socket) {
-			    	let socketMsg = "readchat," + otherId + "," + chatroomId
-			      	socket.send(socketMsg)
-			    }
-        	}
+            if(socket) {
+		    	let socketMsg = "readchat," + otherId + "," + chatroomId
+		      	socket.send(socketMsg)
+		    }
         })
         
         $("#sendBtn").on('click', function(){
@@ -157,15 +151,13 @@
     			$.ajax({
     				type: 'post',
     				url: '/korea/sendchatting',
-    				async: false,
     				headers: { "content-type" : "application/json" },  //요청헤더
     				data : JSON.stringify({chatroomId: parseInt(chatroomId), loginId:loginId, chat: chat}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
     				success: function(result) {
-    					showChattingList(chatroomId)
     					showList()
+    					showChattingList(chatroomId)
     	                $('#chatInput').val('')
 		    			if(socket) {
-		    				console.log('소켓입니다.')
 		                	let socketMsg = "sendchat," + otherId + "," + chatroomId
 		                	socket.send(socketMsg)
 		                }
@@ -180,11 +172,9 @@
         $.ajax({
             type: 'post',
             url: '/korea/chats',
-            async: false,
             headers: { "content-type" : "application/json" },  //요청헤더
 			data : JSON.stringify({loginId:loginId}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
 			success: function(result) {
-		    	console.log('showList입니다.')
                 $('#chatrooms').html(toHtml(result))
             },
             error: function() {alert('error')}
@@ -195,7 +185,7 @@
         let tmp = ''
 
         chatrooms.forEach(function(chatroom){
-            tmp += '<div class="chatroom" data-chatroomId="' + chatroom.id + '" data-otherId="' + chatroom.other_id + '" data-recentId="' + chatroom.recent_id +  '" data-unreadcnt="' + chatroom.unread_cnt + '">'
+            tmp += '<div class="chatroom" data-chatroomId="' + chatroom.id + '" data-otherId="' + chatroom.other_id + '">'
             tmp += '<div><p>' + chatroom.other_id + '</p><br><p>' + chatroom.recent_id + ': ' + chatroom.recent_chat + '</p></div>'
             tmp += '<div><p>' + formatRegDate(chatroom.recent_date) + '</p><br><p>'
             if(chatroom.recent_id !== loginId && chatroom.unread_cnt !== 0) {
@@ -211,12 +201,9 @@
     	$.ajax({
     		type: 'post',
     		url: '/korea/chattings',
-    		async: false,
             headers: { "content-type" : "application/json" },  //요청헤더
 			data : JSON.stringify({chatroomId:parseInt(chatroomId), loginId:loginId}),
     		success: function(result) {
-    	    	console.log('showChattingList입니다.')
-    	    	
     			$('#chatting').html(chatHtml(result))
     			
                 var chattingDiv = document.getElementById('chatting')
@@ -302,8 +289,8 @@
 		    	console.log('chatroomId:', chatroomId)
 		    	console.log('type: ', typeof(chatroomId))
 		    	if(String(message.chatroomId) === chatroomId) {
-	    			showChattingList(chatroomId)
 		    		showList()
+		    		showChattingList(chatroomId)
 		    		if(socket) {
 				    	let socketMsg = "readchat," + otherId + "," + chatroomId
 				      	socket.send(socketMsg)
@@ -319,8 +306,8 @@
 		    	console.log('chatroomId:', chatroomId)
 		    	console.log('type: ', typeof(chatroomId))
 		    	if(String(message.chatroomId) === chatroomId) {
-		    		showChattingList(chatroomId)
 		    		showList()
+		    		showChattingList(chatroomId)
 		    	}
 		    	else {
 		    		showList()

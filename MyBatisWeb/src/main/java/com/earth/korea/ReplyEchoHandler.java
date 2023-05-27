@@ -85,6 +85,9 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		sessions.remove(session);
+		String senderId = getId(session);
+		userSessions.remove(senderId);
 		System.out.println("afterConnectionClosed:" + session + " : " + status);
 	}
 	
