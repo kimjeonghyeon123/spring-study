@@ -1,0 +1,33 @@
+user1 user2 메시지 hi 1개 보냄
+
+1번 방 생성
+
+(1, user1, user2, 0, hi, 2020) 생성
+(1, user2, user1, 0, hi, 2020) 생성
+
+(1, 1, user1, hi, 2020, false) 생성
+
+1번방에 있는 false의 개수를 sender_id != usre1인 데이터의
+uncheck_cnt에 저장함
+
+(1, user2, user1, 1, hi, 2020) 수정
+
+유저2가 접속해서 채팅방 목록을 가져옴  (1, user2, user1, 1, hi, 2020)
+select 
+from t_chatroomdetail
+where sender_id = user2
+
+유저1이 접속해서 채팅방 목록을 가져옴  (1, user1, user2, 0, hi, 2020)
+select 
+from t_chatroomdetail
+where sender_id = user1
+
+유저 2가 유저 1이 보낸 메시지 읽음
+
+1번 방에 있는 sender_id != user2인 데이터를 false를 true로 바꿈
+(1, 1, user1, hi, 2020, true) 수정
+
+
+1번 방에 있는 sender_id = user2 안읽음개수를 0으로 바꿈
+
+
