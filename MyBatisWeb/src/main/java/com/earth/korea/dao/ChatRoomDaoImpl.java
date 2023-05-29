@@ -43,4 +43,9 @@ public class ChatRoomDaoImpl implements ChatRoomDao {
 		return session.update(namespace + "updateUnreadCntToZero", map);
 	}
 
+	@Override
+	public int delete(Integer id) throws Exception {
+		return session.delete(namespace + "delete", id);
+	}
+
 }

@@ -120,16 +120,24 @@
             </div>
         </div>
     </div>
+    
 <script type="text/javascript">
     let loginId = '${loginId}'
-    let chatroomId = null
-    let otherId = null
+    let chatroomId = '${chatroomId}'
+    let otherId = '${otherId}'
     let socket = null
     let recentId = null
     let unreadcnt = null
+    
     $(document).ready(function(){
         connectWS()
         showList()
+        console.log('chatroomId: ', chatroomId)
+        console.log(typeof(chatroomId))
+        if(chatroomId !== "") {
+        	showChattingList(chatroomId)
+        }
+        
         
         $("#chatrooms").on('click', '.chatroom', function(){
         	chatroomId = $(this).attr('data-chatroomId')
@@ -137,9 +145,10 @@
         	recentId = $(this).attr('data-recentId')
         	unreadcnt = $(this).attr('data-unreadcnt')
         	
+        	let cnt = chatroomCnt(chatroomId)
         	showChattingList(chatroomId)
         	showList()
-        	if(recentId === otherId && unreadcnt !== '0') {
+        	if(recentId === otherId && unreadcnt !== '0' && cnt === 2) {
 	            if(socket) {
 			    	let socketMsg = "readchat," + otherId + "," + chatroomId
 			      	socket.send(socketMsg)
@@ -160,13 +169,13 @@
     				url: '/korea/sendchatting',
     				async: false,
     				headers: { "content-type" : "application/json" },  //요청헤더
-    				data : JSON.stringify({chatroomId: parseInt(chatroomId), loginId:loginId, chat: chat}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
+    				data : JSON.stringify({chatroomId: parseInt(chatroomId), loginId: loginId, otherId: otherId, chat: chat}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
     				success: function(result) {
+    					chatroomId = String(result)
     					showChattingList(chatroomId)
     					showList()
     	                $('#chatInput').val('')
 		    			if(socket) {
-		    				console.log('소켓입니다.')
 		                	let socketMsg = "sendchat," + otherId + "," + chatroomId
 		                	socket.send(socketMsg)
 		                }
@@ -175,6 +184,28 @@
     			})
     		}
         })
+        
+		$("#chatrooms").on('click', '.delBtn', function() {
+			chatroomId = $(this).parent().attr("data-chatroomId")
+			
+			$.ajax({
+				type: 'post',
+				url: '/korea/deletechatting',
+				async: false,
+				headers: { "content-type" : "application/json" },  //요청헤더
+				data : JSON.stringify({chatroomId: parseInt(chatroomId), loginId: loginId}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
+				success: function(result) {
+					showList()
+					$('#chatting').empty()
+					if(socket) {
+						let socketMsg = "removechat," + otherId + "," + chatroomId
+	                	socket.send(socketMsg)
+					}
+	            },
+	            error: function() {alert('error')}
+			})
+        })
+        
     })
 
     let showList = function() {
@@ -185,7 +216,6 @@
             headers: { "content-type" : "application/json" },  //요청헤더
 			data : JSON.stringify({loginId:loginId}),  //서버로 전송할 데이터, stringify()로 직렬화 필요
 			success: function(result) {
-		    	console.log('showList입니다.')
                 $('#chatrooms').html(toHtml(result))
             },
             error: function() {alert('error')}
@@ -202,7 +232,7 @@
             if(chatroom.recent_id !== loginId && chatroom.unread_cnt !== 0) {
                 tmp += chatroom.unread_cnt
             }
-            tmp += '</p></div></div>'
+            tmp += '</p></div><button class="delBtn">채팅방 나가기</button></div>'
         })
 
         return tmp
@@ -216,10 +246,16 @@
             headers: { "content-type" : "application/json" },  //요청헤더
 			data : JSON.stringify({chatroomId:parseInt(chatroomId), loginId:loginId}),
     		success: function(result) {
-    	    	console.log('showChattingList입니다.')
-    	    	
-    			$('#chatting').html(chatHtml(result))
-    			
+    			$('#chatting').html(chatHtml(result.list))
+    			if(result.chatroomCnt !== 2) {
+    				$('#chatting').append('<div style="text-align: center;">' + otherId + '님이 방을 나갔습니다.</div>')
+    				$('#chatInput').attr('disabled', true) // textarea 비활성화
+			        $('#sendBtn').attr('disabled', true)
+    			}
+    			else {
+	    			$('#chatInput').attr('disabled', false) // textarea 비활성화
+			        $('#sendBtn').attr('disabled', false)
+    			}
                 var chattingDiv = document.getElementById('chatting')
                 chattingDiv.scrollTop = chattingDiv.scrollHeight
     		},
@@ -282,6 +318,22 @@
         }
     }
     
+    let chatroomCnt = function(chatroomId) {
+    	$.ajax({
+    		type: 'post',
+    		url: '/korea/chattingcnt',
+    		async: false,
+            headers: { "content-type" : "application/json" },  //요청헤더
+			data : JSON.stringify({chatroomId:parseInt(chatroomId)}),
+    		success: function(result) {
+    			return result
+    		},
+    		error: function(){
+    			alert('error')
+    		}
+    	})
+    }
+    
 	// 소켓
 	function connectWS() {
 		var ws = new WebSocket("ws://localhost:8080/korea/replyEcho")
@@ -325,6 +377,11 @@
 		    	}
 		    	else {
 		    		showList()
+		    	}
+		    }
+		    else if (cmd === "removechat") {
+		    	if(String(message.chatroomId) === chatroomId) {
+		    		showChattingList(chatroomId)
 		    	}
 		    }
 		}

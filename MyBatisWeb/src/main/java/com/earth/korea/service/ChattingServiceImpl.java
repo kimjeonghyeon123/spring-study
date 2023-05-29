@@ -24,7 +24,12 @@ public class ChattingServiceImpl implements ChattingService {
 		this.chatRoomDao = chatRoomDao;
 		this.chattingDao = chattingDao;
 	}
-
+	
+	@Override
+	public int getChatRoomCnt(Integer chatroom_id) throws Exception {
+		return userChatRoomDao.selectChatRoomCnt(chatroom_id);
+	}
+	
 	@Override
 	public Integer getChattingRoomId(String login_id, String other_id) throws Exception {
 		return userChatRoomDao.selectChatRoomId(login_id, other_id);
@@ -60,9 +65,24 @@ public class ChattingServiceImpl implements ChattingService {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void sendChatting(Integer chatrrom_id, String login_id, String message) throws Exception {
-		chattingDao.insert(new ChattingDTO(login_id, chatrrom_id, message));
-		chatRoomDao.updateChatRoom(new ChatRoomDTO(chatrrom_id, login_id, message));
+	public void sendChatting(Integer chatroom_id, String login_id, String message) throws Exception {
+		chattingDao.insert(new ChattingDTO(login_id, chatroom_id, message));
+		chatRoomDao.updateChatRoom(new ChatRoomDTO(chatroom_id, login_id, message));
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public void deleteChattingRoom(Integer chatroom_id, String login_id) throws Exception {
+		int cnt = userChatRoomDao.selectChatRoomCnt(chatroom_id);
+		
+		if(cnt == 2) {
+			userChatRoomDao.delete(chatroom_id, login_id);
+		}
+		else {
+			userChatRoomDao.delete(chatroom_id, login_id);
+			chatRoomDao.delete(chatroom_id);
+			chattingDao.deleteAll(chatroom_id);
+		}
 	}
 	
 }

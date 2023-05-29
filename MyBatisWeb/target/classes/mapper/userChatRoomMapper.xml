@@ -5,6 +5,13 @@
 
 <mapper namespace="com.earth.korea.dao.UserChatRoomMapper">
 
+	<!-- 상대가 채팅방 삭제했는지 확인 -->
+	<select id="selectChatRoomCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM t_userchatroom
+		WHERE chatroom_id = #{chatroom_id}
+	</select>
+	
 	<!-- 채팅방 번호 가져오기 -->
 	<select id="selectChatRoomId" parameterType="map" resultType="int">
 		SELECT chatroom_id
@@ -19,4 +26,10 @@
 		       (#{chatroom_id}, #{other_id}, #{login_id})
 	</insert>
 
+	<!-- 채팅방 삭제하기 -->
+	<delete id="delete" parameterType="map">
+		DELETE FROM t_userchatroom
+		WHERE chatroom_id = #{chatroom_id} and login_id = #{login_id}
+	</delete>
+	
 </mapper>

@@ -19,6 +19,11 @@ public class UserChatRoomDaoImpl implements UserChatRoomDao {
 	}
 
 	@Override
+	public int selectChatRoomCnt(Integer chatroom_id) throws Exception {
+		return session.selectOne(namespace + "selectChatRoomCnt", chatroom_id);
+	}
+	
+	@Override
 	public Integer selectChatRoomId(String login_id, String other_id) throws Exception {
 		Map map = new HashMap();
 		map.put("login_id", login_id);
@@ -29,6 +34,14 @@ public class UserChatRoomDaoImpl implements UserChatRoomDao {
 	@Override
 	public int insert(UserChatRoomDTO userChatRoomDTO) throws Exception {
 		return session.insert(namespace + "insert", userChatRoomDTO);
+	}
+
+	@Override
+	public int delete(Integer chatroom_id, String login_id) throws Exception {
+		Map map = new HashMap();
+		map.put("chatroom_id", chatroom_id);
+		map.put("login_id", login_id);
+		return session.delete(namespace + "delete", map);
 	}
 
 }

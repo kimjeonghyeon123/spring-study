@@ -16,7 +16,7 @@
 	
 	<!-- 채팅방 만들기 -->
 	<insert id="insert" parameterType="ChatRoomDto" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_userchatroom(recent_id, recent_chat)
+		INSERT INTO t_chatroom(recent_id, recent_chat)
 		VALUES(#{recent_id}, #{recent_chat})
 	</insert>
 	
@@ -33,5 +33,11 @@
 		SET unread_cnt = 0
 		WHERE id = #{id} and recent_id != #{login_id}
 	</update>
+	
+	<!-- 채팅방 삭제할 때 사용 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM t_chatroom
+		WHERE id = #{id}
+	</delete>
 	
 </mapper>

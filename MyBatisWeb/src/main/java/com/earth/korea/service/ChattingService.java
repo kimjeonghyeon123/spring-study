@@ -6,7 +6,10 @@ import com.earth.korea.domain.ChatRoomDTO;
 import com.earth.korea.domain.ChattingDTO;
 
 public interface ChattingService {
-
+	
+	//상대방이 채팅방 나갔는지 확인할 때 사용
+	int getChatRoomCnt(Integer chatroom_id) throws Exception;
+	
 	//채팅방이 있으면 채팅방 번호을 주고 없으면 null을 넘김
 	//채팅 페이지로 넘어감 or
 	//채팅 새 페이지로 넘어감
@@ -23,6 +26,9 @@ public interface ChattingService {
 	List<ChattingDTO> readChatting(Integer chatroom_id, String login_id) throws Exception;
 	
 	//기존 채팅방에서 채팅 보내기
-	void sendChatting(Integer chatrrom_id, String login_id, String message) throws Exception;
+	void sendChatting(Integer chatroom_id, String login_id, String message) throws Exception;
+	
+	//채팅방 나가기
+	void deleteChattingRoom(Integer chatroom_id, String login_id) throws Exception;
 	
 }

@@ -37,4 +37,9 @@ public class ChattingDaoImpl implements ChattingDao {
 		return session.update(namespace + "updateCheckReadToTrue", map);
 	}
 
+	@Override
+	public int deleteAll(Integer chatroom_id) throws Exception {
+		return session.delete(namespace + "deleteAll", chatroom_id);
+	}
+
 }

@@ -18,4 +18,7 @@ public interface ChatRoomDao {
 	//채팅방 읽은 상태로 만들기
 	int updateUnreadCntToZero(Integer id, String login_id) throws Exception;
 	
+	//채팅방 삭제할 때 사용
+	int delete(Integer id) throws Exception;
+	
 }

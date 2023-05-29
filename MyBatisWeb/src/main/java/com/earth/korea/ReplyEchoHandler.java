@@ -73,6 +73,21 @@ public class ReplyEchoHandler extends TextWebSocketHandler {
 				receiverSession.sendMessage(tmpMsg);
 			}
 		}
+		
+		if(cmd.equals("removechat")) {
+			String receiverId = strs[1];
+			Integer chatroomId = Integer.parseInt(strs[2]);
+			
+			WebSocketSession receiverSession = userSessions.get(receiverId);
+			if(receiverSession != null) {
+				JSONObject replyMessage = new JSONObject();
+				replyMessage.put("cmd", "removechat");
+				replyMessage.put("chatroomId", chatroomId);
+				
+				TextMessage tmpMsg = new TextMessage(replyMessage.toString());
+				receiverSession.sendMessage(tmpMsg);
+			}
+		}
 	}
 
 	//로그인한 사용자의 세션 아이디를 추출하기 위해 사용되며, 

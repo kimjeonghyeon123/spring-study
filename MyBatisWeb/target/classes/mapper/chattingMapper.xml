@@ -26,4 +26,10 @@
 		WHERE chatroom_id = #{chatroom_id} and sender_id != #{login_id} 
 	</update>
 	
+	<!-- 채팅방 모든 채팅 삭제하기 -->
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM t_chatting
+		WHERE chatroom_id = #{chatroom_id}
+	</delete>
+	
 </mapper>

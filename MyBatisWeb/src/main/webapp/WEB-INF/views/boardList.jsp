@@ -139,7 +139,15 @@
 			border-radius: 5px;
 			margin-left: 30px;
 		}
-			
+		.chat-overlay {
+		    display: none;
+		    position: relative;
+		    top: -10px;
+		    background-color: red;
+		    color: white;
+		    padding: 5px;
+		    border-radius: 5px;
+		}	
     </style>
 </head>
 <body>
@@ -196,7 +204,10 @@
     					<td class="title">
     						<a href="<c:url value="/board/read${pr.sc.queryString}&bno=${boardDto.bno }" />">${boardDto.title }</a>
     					</td>
-    					<td class="writer">${boardDto.writer }</td>
+    					<td class="writer">
+					      	<a href="<c:url value="/chat?otherId=${boardDto.writer}" />" class="chat-link">${boardDto.writer}</a>
+					      	<span class="chat-overlay">채팅하기</span>
+					    </td>
     					<td class="regdate">
     						<fmt:formatDate value="${boardDto.reg_date }" pattern="yyyy-MM-dd" type="date"/>
     					</td>
@@ -226,6 +237,20 @@
     		</div>
     	</div>
     </div>
+	<script>
+	  // writer 클릭 시 채팅하기 문구 띄우기
+	  var chatLinks = document.getElementsByClassName("chat-link");
+	  for (var i = 0; i < chatLinks.length; i++) {
+	    chatLinks[i].addEventListener("mouseenter", function() {
+	      var overlay = this.nextElementSibling;
+	      overlay.style.display = "inline";
+	    });
+	    chatLinks[i].addEventListener("mouseleave", function() {
+	      var overlay = this.nextElementSibling;
+	      overlay.style.display = "none";
+	    });
+	  }
+	</script>
 </body>
 </html>
 
