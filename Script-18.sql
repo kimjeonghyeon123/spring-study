@@ -19,10 +19,11 @@ create table danggeun(
 	title		varchar(50) not null,	-- 상품게시물제목
 	name 		varchar(50) not null,	-- 상품이름
 	type_id		Integer		not null,	-- 상품타입
-	local_id	Integer		not null,	-- 판매지역
+	type_name	varchar(50)	not null,	-- 상품타입이름
 	price		int			not null,	-- 상품가격
 	content 	text 		not null,	-- 상품설명
-	writer_email varchar(50) not null,	-- 판매자
+	writer_email varchar(50) not null,	-- 판매자 이메일
+	writer_name varchar(50) not null,   -- 판매자 이름
 	view_cnt 	int 		default 0,	-- 조회수
 	zzim_cnt	int			default 0,	-- 찜 수
 	reg_date 	date 		default current_timestamp,
@@ -36,7 +37,10 @@ create table zzim_danggeun(
 	primary key(member_email, danggeun_id)
 );
 
--- 유저, 채팅방 목록
+-----------
+--t_chat--
+-----------
+
 drop table if exists t_userchatroom;
 create table t_userchatroom(
 	chatroom_id integer not null,
@@ -45,7 +49,6 @@ create table t_userchatroom(
 	primary key(chatroom_id, login_id)
 );
 
--- 채팅방
 drop table if exists t_chatroom;
 create table t_chatroom(
 	id serial primary key,
@@ -55,7 +58,6 @@ create table t_chatroom(
 	unread_cnt int default 1
 );
 
--- 채팅
 drop table if exists t_chatting;
 create table t_chatting(
 	id serial primary key,
