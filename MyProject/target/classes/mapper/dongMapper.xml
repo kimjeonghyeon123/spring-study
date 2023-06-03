@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.earth.danggeun.dao.DongMapper">
+
+	<insert id="insert" parameterType="DongDto">
+		INSERT INTO dong(dong_code, dong_name)
+		VALUES(#{dong_code}, #{dong_name})
+	</insert>
+
+	<select id="selectBySigoon" parameterType="String" resultType="DongDto">
+		SELECT dong_code, dong_name
+		FROM dong
+		WHERE dong_code LIKE concat(#{sigoon_code}, '%')
+	</select>
+	
+	<select id="select" parameterType="String" resultType="DongDto">
+		SELECT dong_code, dong_name
+		FROM dong
+		WHERE dong_code = #{dong_code}
+	</select>
+	
+</mapper>

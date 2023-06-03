@@ -1,0 +1,180 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400;700&family=Nanum+Gothic:wght@400;700;800&display=swap');
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+:root {
+    --background-color: #ed8b9e;
+    --bodybackground-color: #a1e1dc;
+}
+body {
+    font-family: 'NanumSquareNeo-Variable';
+    margin: 0;
+    background-color: var(--bodybackground-color);
+}
+a {
+    text-decoration: none;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background-color);
+    padding: 16px 12px;
+    height: 100px;
+}
+.navbar__logo {
+    position: sticky;
+    margin-left: 2%;
+}
+.logo {
+    width: 120px;
+    margin-left: 30px;
+}
+.navbar__menu {
+    list-style: none;
+    display: flex;
+    margin-top: 55px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0px 50px;
+}
+.navbar__menu li {
+    padding: 12px 24px;
+}
+.navbar__menu a {
+    color: #ed8b9e;
+}
+.navbar__menu li:hover {
+    background-image: linear-gradient(transparent 75%, #c4aedb 50%);    
+}
+.navbar__icons {
+    list-style: none;
+    display: flex;
+    color: #fff;
+}
+.navbar__icons li {
+    padding: 8px 12px;
+    margin: 0;
+}
+.navbar__toggleBtn {
+    display: none;
+    color: #fff;
+    position: absolute;
+    margin-top: 12px;
+    right: 30px;
+    font-size: 20px;
+}
+#btnLogin {
+    margin: 0;
+    color: #ed8b9e;
+    border: none;
+    background-color: #fff;
+    font-weight: bold;
+}
+.btnLogin {
+	background-color: #fff;
+    border: 0.12rem solid #ed8b9e;
+    font-weight: 600;
+    font-family: 'NanumSquareNeo-Variable';
+    
+}
+#scroll-top {
+    display:scroll;
+    position:fixed;
+    bottom:10%;
+    right:5%;
+    width: 50px;
+    border-radius: 30px;
+    border: none;
+    text-align: center;
+    padding: 1%;
+    font-weight: 800;
+    background-color: #b7a4cc;
+    color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+    .logo {
+        width: 80px;
+        margin-left: 0px;
+    }
+    .navbar__menu {
+        list-style: none;
+        display: flex;
+        padding: 0px;
+        font-size: 14px;
+    }
+    .navbar__menu li {
+        text-align: center;
+        padding: 12px 18px;
+
+    }
+}
+
+/*768 이하로 줄어들면 내비바*/
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 30px;
+        height: 100%;
+    }
+    .navbar__logo {
+        position: sticky;
+        margin-left: 2%;
+        width: 80px;
+        height: 40px;
+        margin: 0px;
+    }
+    .logo {
+        width: 50px;
+        margin: 0px;
+        height: 50px;
+    }
+    .navbar__menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .navbar__menu li {
+        width: 100%;
+        text-align: center;
+    }
+    .navbar__menu li:hover {
+        transform: scale(1.1);
+        background-image: none;    
+    }
+    .navbar__icons {
+        justify-content: center;
+        width: 100%;
+    }
+    .navbar__toggleBtn {
+        display: block;
+    }
+    #scroll-top {
+        display:scroll;
+        position:fixed;
+        bottom:5%;
+        right:2%;
+        text-align: center;
+        padding: 1%;
+        border-radius: 30px;
+        border: none;
+        font-weight: 800;
+        background-color: #b7a4cc;
+        color: #fff;
+    }
+}
+.navbar__menu.active,
+.navbar__icons.active {
+    display: flex;
+}
+
