@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.earth.danggeun.domain.DangMemberDTO" alias="DangMemberDto"/>
+		<typeAlias type="com.earth.danggeun.domain.DanggeunDTO" alias="DanggeunDto"/>
+		<typeAlias type="com.earth.danggeun.domain.DanggeunSearchItem" alias="DanggeunSearchItem"/>
+		<typeAlias type="com.earth.danggeun.domain.DanggeunTypeDTO" alias="DanggeunTypeDto"/>
+		<typeAlias type="com.earth.danggeun.domain.ZzimDanggeunDTO" alias="ZzimDanggeunDto"/>
+		<typeAlias type="com.earth.danggeun.domain.SidoDTO" alias="SidoDto"/>
+		<typeAlias type="com.earth.danggeun.domain.SigoonDTO" alias="SigoonDto"/>
+		<typeAlias type="com.earth.danggeun.domain.DongDTO" alias="DongDto"/>
+		<typeAlias type="com.earth.danggeun.domain.ChattingDTO" alias="ChattingDto"/>
+		<typeAlias type="com.earth.danggeun.domain.ChatRoomDTO" alias="ChatRoomDto"/>
+		<typeAlias type="com.earth.danggeun.domain.UserChatRoomDTO" alias="UserChatRoomDto"/>
+	</typeAliases>
+</configuration>

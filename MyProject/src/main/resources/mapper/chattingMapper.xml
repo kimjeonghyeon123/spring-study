@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.earth.danggeun.dao.ChattingMapper">
+	
+	<!-- 채팅목록 가져오기 -->
+	<select id="selectAll" parameterType="int" resultType="ChattingDto">
+		SELECT id, sender_email, chatroom_id, chat, chat_date, check_read
+		FROM t_chatting
+		WHERE chatroom_id = #{chatroom_id}
+		ORDER BY id
+	</select>
+	
+	<!-- 채팅 보내기 -->
+	<insert id="insert" parameterType="ChattingDto">
+		INSERT INTO t_chatting(sender_email, chatroom_id, chat)
+		VALUES(#{sender_email}, #{chatroom_id}, #{chat})
+	</insert>
+	
+	<!-- 채팅 읽음 상태로 변경하기 -->
+	<update id="updateCheckReadToTrue" parameterType="map">
+		UPDATE t_chatting
+		SET check_read = true
+		WHERE chatroom_id = #{chatroom_id} and sender_email != #{login_email} 
+	</update>
+	
+	<!-- 채팅방 모든 채팅 삭제하기 -->
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM t_chatting
+		WHERE chatroom_id = #{chatroom_id}
+	</delete>
+	
+</mapper>

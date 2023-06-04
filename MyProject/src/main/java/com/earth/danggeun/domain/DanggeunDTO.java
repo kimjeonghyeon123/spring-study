@@ -1,0 +1,182 @@
+package com.earth.danggeun.domain;
+
+import java.util.Date;
+
+public class DanggeunDTO {
+	
+	private Integer id;
+	private String title;
+	private Integer type_id;
+	private String type_name;
+	private String sido_code;
+	private String sido_name;
+	private String sigoon_code;
+	private String sigoon_name;
+	private String dong_code;
+	private String dong_name;
+	private int price;
+	private String content;
+	private String writer_email;
+	private String writer_name;
+	private int view_cnt;
+	private int zzim_cnt;
+	private Date reg_date;
+	private Date up_date;
+	
+	private boolean is_zzimed = false; // 추가
+	
+	public DanggeunDTO() {}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getType_id() {
+		return type_id;
+	}
+
+	public void setType_id(Integer type_id) {
+		this.type_id = type_id;
+	}
+	
+	public String getType_name() {
+		return type_name;
+	}
+
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
+
+	public String getSido_code() {
+		return sido_code;
+	}
+
+	public void setSido_code(String sido_code) {
+		this.sido_code = sido_code;
+	}
+
+	public String getSido_name() {
+		return sido_name;
+	}
+
+	public void setSido_name(String sido_name) {
+		this.sido_name = sido_name;
+	}
+
+	public String getSigoon_code() {
+		return sigoon_code;
+	}
+
+	public void setSigoon_code(String sigoon_code) {
+		this.sigoon_code = sigoon_code;
+	}
+
+	public String getSigoon_name() {
+		return sigoon_name;
+	}
+
+	public void setSigoon_name(String sigoon_name) {
+		this.sigoon_name = sigoon_name;
+	}
+
+	public String getDong_code() {
+		return dong_code;
+	}
+
+	public void setDong_code(String dong_code) {
+		this.dong_code = dong_code;
+	}
+
+	public String getDong_name() {
+		return dong_name;
+	}
+
+	public void setDong_name(String dong_name) {
+		this.dong_name = dong_name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getWriter_email() {
+		return writer_email;
+	}
+
+	public void setWriter_email(String writer_email) {
+		this.writer_email = writer_email;
+	}
+
+	public String getWriter_name() {
+		return writer_name;
+	}
+
+	public void setWriter_name(String writer_name) {
+		this.writer_name = writer_name;
+	}
+
+	public int getView_cnt() {
+		return view_cnt;
+	}
+
+	public void setView_cnt(int view_cnt) {
+		this.view_cnt = view_cnt;
+	}
+
+	public int getZzim_cnt() {
+		return zzim_cnt;
+	}
+
+	public void setZzim_cnt(int zzim_cnt) {
+		this.zzim_cnt = zzim_cnt;
+	}
+
+	public Date getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
+
+	public Date getUp_date() {
+		return up_date;
+	}
+
+	public void setUp_date(Date up_date) {
+		this.up_date = up_date;
+	}
+
+	public boolean getIs_zzimed() {
+		return is_zzimed;
+	}
+
+	public void setIs_zzimed(boolean is_zzimed) {
+		this.is_zzimed = is_zzimed;
+	}
+	
+}
