@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.earth.withdang.dao.DanggeunZzimMapper">
+
+	<!-- nickname로 멤버가 찜한 상품id 리스트 가져오기 -->
+	<select id="selectByUserNickname" parameterType="String" resultType="DanggeunZzimDto">
+		SELECT *
+		FROM tb_danggeun_zzim
+		WHERE user_nickname = #{user_nickname}
+	</select>
+	
+	<!-- 상품id로 상품을 찜한 리스트 가져오기 -->
+	<select id="selectByDanggeunId" parameterType="int" resultType="DanggeunZzimDto">
+		SELECT *
+		FROM tb_danggeun_zzim
+		WHERE danggeun_id = #{danggeun_id}
+	</select>
+
+	<!-- 멤버가 상품 찜하기 눌렀을 때 사용 -->
+	<!-- 해당 상품의 찜 숫자가 올라가야 됨 -->
+	<insert id="insert" parameterType="DanggeunZzimDto">
+		INSERT INTO tb_danggeun_zzim(user_nickname, danggeun_id)
+		VALUES(#{user_nickname}, #{danggeun_id})
+	</insert>
+	
+	<!-- 유저가 찜한 목록을 다 취소할 때 사용 -->
+	<!-- 해당된 상품들의 찜 수를 다 내려야 됨 -->
+	<delete id="deleteAllByUserNickname" parameterType="String">
+		DELETE FROM tb_danggeun_zzim
+		WHERE user_nickname = #{user_nickname}
+	</delete>
+	
+	<!-- 유저가 상품 찜을 취소했을 때 사용 -->
+	<!-- 해당 상품의 찜 숫자가 내려가야 됨 -->
+	<delete id="delete" parameterType="DanggeunZzimDto">
+		DELETE FROM tb_danggeun_zzim
+		WHERE user_nickname = #{user_nickname} AND danggeun_id = #{danggeun_id}
+	</delete>
+	
+</mapper>
+	

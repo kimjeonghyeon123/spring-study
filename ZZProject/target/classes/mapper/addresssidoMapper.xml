@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.earth.withdang.dao.AddressSidoMapper">
+
+	<select id="selectAll" resultType="AddressSidoDto">
+		SELECT *
+		FROM tb_address_sido
+	</select>
+	
+	<select id="select" parameterType="String" resultType="AddressSidoDto">
+		SELECT *
+		FROM tb_address_sido
+		WHERE code = #{code}
+	</select>
+	
+</mapper>
