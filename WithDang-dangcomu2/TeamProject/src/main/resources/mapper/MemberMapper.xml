@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.earth.mapper.MemberMapper">
+		<insert id="memberJoin" >
+			insert into tb_user values(#{user_email},#{user_name},#{user_nickname},#{user_pw})
+		</insert>
+		
+		<insert id="dogInsert">
+			insert into tb_dogInfo (user_email)
+			(
+				select a.user_email
+				from tb_user a left join tb_doginfo b
+				on a.user_email = b.user_email
+				where b.user_email is null
+			)
+		</insert>
+		
+		<!-- 아이디 중복검사 -->
+  		<select id="emailCheck" resultType="int">
+  	
+  		select count(*) 
+  		from tb_user 
+  		where user_email = #{user_email}
+  	
+  		</select>
+  		
+  		<!-- 닉네임 중복검사 -->
+  		<select id="nickNameCheck" resultType="int">
+  	
+  		select count(*) 
+  		from tb_user 
+  		where user_nickname = #{user_nickname}
+  	
+  		</select>
+  		
+  		<select id="memberLogin" resultType="MemberDto">
+  			select *
+  			from tb_user
+  			where user_email = #{user_email} and user_pw = #{user_pw}
+  		</select>
+  		
+  		<select id="dogSelect" resultType="DogDto">
+  			select *
+  			from tb_dogInfo
+  			where user_email = #{user_email}
+  		</select>
+  		
+  		<select id="memberCheck" resultType="MemberDto">
+  			select user_pnum
+  			from tb_user
+  			where user_email = #{user_email}
+  		</select>
+  		
+  </mapper>
+
+
+
+
+
