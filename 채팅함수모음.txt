@@ -1,0 +1,13 @@
+- showChattingAndListwithsocket(chatroom_id)
+	채팅 목록 부르고
+	채팅방 목록 부르고
+	소켓에 readchat 메시지 보내는 것
+
+- showChattingAndList(chatroom_id)
+	채팅 목록 부르고
+	채팅방 목록 부르는 것
+
+- sendChatting(chatroom_id)
+	채팅 목록 부르고
+	채팅방 목록 부르고
+	소켓에 sendchat 메시지 보내는 것	
