@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.earth.mapper.ImageMapper">
+
+    <insert id="insert" parameterType="img">
+        insert into
+
+        <choose>
+            <when test='pt_category=="dogProfile"'>
+                tb_photo
+                (pt_adres,pt_category,user_email,pt_reg_date)
+                values (#{pt_adres},#{pt_category},#{user_email},now())
+            </when>
+            <when test='pt_category=="post"'>
+                tb_photo_post
+                (pt_adres,pt_category,user_email,post_id,pt_reg_date)
+                values (#{pt_adres},#{pt_category},#{user_email},#{postNum},now())
+            </when>
+        </choose>
+    </insert>
+
+    <select id="select" parameterType="img" resultType="img">
+        select *
+        from tb_photo
+        where user_email = #{user_email}
+          and pt_category = #{pt_category}
+    </select>
+<!--    postnum 버전도 만들어야 함-->
+    <delete id="delete" parameterType="img">
+        delete from tb_photo where user_email=#{user_email} and pt_category=#{pt_category}
+    </delete>
+    <!--    postnum 버전도 만들어야 함-->
+
+</mapper>
+
+
+
+
+

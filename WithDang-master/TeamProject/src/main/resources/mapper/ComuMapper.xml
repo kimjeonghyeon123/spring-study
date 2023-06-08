@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.earth.mapper.ComuMapper">
+  
+  		<sql id="selectFromPost">
+  			SELECT post_id, post_title, post_content, post_ctgr_id, post_created_time, tp.user_email, post_view_count
+			FROM tb_post tp
+  		</sql>
+  		
+  		<select id="select" parameterType="int" resultType="ComuDTO">
+  			<include refid="selectFromPost"></include>
+  			where post_id = #{post_id}
+  		</select>
+  		
+  		<select id="selectAll" resultType="ComuDTO">
+  			<include refid="selectFromPost"/>
+  			order by post_created_time desc, post_id desc
+  		</select>
+  		
+  		<select id="selectPage" parameterType="map" resultType="ComuDTO">
+  			<include refid="selectFromPost"/>
+	  		order by post_created_time desc,  post_id desc
+	  		limit #{pageSize} offset #{offset}
+  		</select>
+  		
+  		<select id="searchResultCnt" parameterType="SearchItem" resultType="int">
+  			select count(*)
+  			from tb_post tp
+  			<include refid="searchCondition"/>
+  		</select>
+  		
+  		<select id="categoryResultCnt" parameterType="map" resultType="int">
+  			select count(*)
+  			from tb_post tp
+  			<include refid="searchCategoryCondition"/>
+  		</select>
+  		
+  		<select id="searchSelectPage" parameterType="SearchItem" resultType="ComuDTO">
+  			<include refid="selectFromPost"/>
+  			<include refid="searchCondition"></include>
+	  		order by post_created_time desc,  post_id desc
+	  		limit #{pageSize} offset #{offset}
+  		</select>
+  		
+  		<select id="searchCategoryPage" parameterType="map" resultType="ComuDTO">
+  			<choose>
+		        <when test='option=="C"'>
+		        	<include refid="selectFromPost"/>
+  					where post_ctgr_id = #{post_ctgr_id}
+		            AND post_content LIKE concat('%', #{keyword}, '%')
+		        </when>
+		        <when test='option=="W"'>
+		        	SELECT tp.post_id, tp.post_title, tp.post_content, tp.post_ctgr_id, tp.post_created_time, tp.post_view_count, tp.user_email
+					FROM tb_post tp
+					INNER JOIN tb_user tu ON tp.user_email = tu.user_email
+					where post_ctgr_id = #{post_ctgr_id}
+					AND tu.user_name LIKE concat('%', #{keyword}, '%')
+		        </when>
+	        	<otherwise>
+	        		<include refid="selectFromPost"/>
+  					where post_ctgr_id = #{post_ctgr_id}
+		            AND post_title LIKE concat('%', #{keyword}, '%')
+		        </otherwise>
+		  	</choose>
+	  		order by post_created_time desc, post_id desc
+	  		limit #{pageSize} offset #{offset}
+  		</select>
+
+  		<select id="selectUserName" parameterType="String" resultType="String">
+  			select user_name
+  			from tb_user
+  			where user_email = #{user_email}
+  		</select>
+  		
+  		<sql id="searchCondition">
+      		<choose>
+		        <when test='option=="C"'>
+  					where true
+		            AND post_content LIKE concat('%', #{keyword}, '%')
+		        </when>
+		        <when test='option=="W"'>
+					INNER JOIN tb_user tu ON tp.user_email = tu.user_email
+					where true
+					AND tu.user_name LIKE concat('%', #{keyword}, '%')
+		        </when>
+	        	<otherwise>
+  					where true
+		            AND post_title LIKE concat('%', #{keyword}, '%')
+		        </otherwise>
+		  	</choose>
+  		</sql>
+  		
+  		<sql id="searchCategoryCondition">
+      		<choose>
+		        <when test='option=="C"'>
+  					where post_ctgr_id = #{post_ctgr_id}
+		            AND post_content LIKE concat('%', #{keyword}, '%')
+		        </when>
+		        <when test='option=="W"'>
+					INNER JOIN tb_user tu ON tp.user_email = tu.user_email
+					where post_ctgr_id = #{post_ctgr_id}
+					AND tu.user_name LIKE concat('%', #{keyword}, '%')
+		        </when>
+	        	<otherwise>
+  					where post_ctgr_id = #{post_ctgr_id}
+		            AND post_title LIKE concat('%', #{keyword}, '%')
+		        </otherwise>
+		  	</choose>
+  		</sql>
+  		
+  		<select id="count" resultType="int">
+  			select count(*) from tb_post
+  		</select>
+  		
+  		<insert id="insert" parameterType="ComuDTO">
+  			INSERT INTO tb_post
+			(post_title, post_content, post_ctgr_id, user_email)
+			VALUES(#{post_title}, #{post_content}, #{post_ctgr_id}, #{user_email});
+  		</insert>
+  		
+  		<delete id="delete" parameterType="map">
+  			DELETE FROM tb_post
+			where post_id = #{post_id} and user_email = #{user_email}
+  		</delete>
+  		
+  		<delete id="deleteForAdmin" parameterType="int">
+  			delete from tb_post where post_id = #{post_id}
+  		</delete>
+  		
+  		<delete id="deleteAll">
+  			delete from tb_post
+  		</delete>
+  		
+  		<update id="update" parameterType="ComuDTO">
+  			UPDATE public.tb_post
+			SET post_title = #{post_title}, post_content = #{post_content}, post_ctgr_id = #{post_ctgr_id}
+			WHERE post_id = #{post_id} and user_email = #{user_email}
+  		</update>
+  		
+  		<update id="increaseViewCnt" parameterType="int">
+  			update tb_post
+  			set post_view_count = post_view_count + 1
+  			where post_id = #{post_id}	
+  		</update>
+  		
+  		<!-- 댓글 조회/등록/삭제 변수a, b 추가-->
+  		<select id="selectComments" parameterType="int" resultType="CommentDTO">
+  			SELECT a.cmt_id, a.post_id, a.cmt_content, a.cmt_created_time, b.user_email, b.user_nickname
+			FROM tb_comment a, tb_user b
+			where post_id = #{post_id} and a.user_email = b.user_email	
+  		</select>
+  		
+  		<insert id="comment" parameterType="CommentDTO">
+  			INSERT INTO tb_comment
+			(post_id, cmt_content, user_email)
+			VALUES(#{post_id}, #{cmt_content}, #{user_email});
+  		</insert>
+  		
+  		<delete id="deleteComment" parameterType="map">
+  			DELETE FROM tb_comment
+  			WHERE cmt_id = #{cmt_id} and user_email = #{user_email)
+  		</delete>
+  		
+  		<delete id="deleteCommentForAdmin" parameterType="int">
+  			DELETE FROM tb_comment
+  			WHERE cmt_id = #{cmt_id}
+  		</delete>
+  		
+</mapper>
