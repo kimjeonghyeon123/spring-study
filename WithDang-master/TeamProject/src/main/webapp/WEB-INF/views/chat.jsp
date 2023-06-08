@@ -307,7 +307,7 @@
                success: function(result) {
                   chatroom_id = String(result)
                   sendChatting(chatroom_id)
-                      $('#msg-input').val('')
+                  $('#msg-input').val('')
                },
                error: function() {alert('error')}
             })
