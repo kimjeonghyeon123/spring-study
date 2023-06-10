@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.earth.mapper.DanggeunPhotoMapper">
+
+	<select id="selectAllByDanggeunId" parameterType="int" resultType="DanggeunPhotoDto">
+		SELECT *
+		FROM tb_danggeun_photo
+		WHERE danggeun_id = #{danggeun_id}
+		order by sequence
+	</select>
+
+	<insert id="insert" parameterType="DanggeunPhotoDto">
+		INSERT INTO tb_danggeun_photo(address, danggeun_id, sequence)
+		VALUES(#{address}, #{danggeun_id}, #{sequence})
+	</insert>
+	
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM tb_danggeun_photo
+		WHERE danggeun_id = #{danggeun_id}
+	</delete>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM tb_danggeun_photo
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>
